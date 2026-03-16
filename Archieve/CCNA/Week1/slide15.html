@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+  <style>
+    * { box-sizing: border-box; }
+    /* Let the browser handle the height natively */
+    body { margin: 0; background:#0b1220; font-family: Inter, system-ui, -apple-system, sans-serif; overflow: hidden; }
+    .slide { width: 100vw; height: 100vh; position: relative; overflow: hidden; display: flex; justify-content: center; background: #0b1220; }
+    
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+
+    /* --- General Slide Animations --- */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-up { animation: fadeUp 0.6s ease-out forwards; opacity: 0; }
+    
+    /* --- Sequenced Step Animations --- */
+    @keyframes popIn {
+      0% { opacity: 0; transform: scale(0.95) translateY(10px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .anim-step { opacity: 0; animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+    
+    /* Timings for the 5 steps + the cheat sheet */
+    .delay-s1 { animation-delay: 0.5s; }
+    .delay-s2 { animation-delay: 1.5s; }
+    .delay-s3 { animation-delay: 2.5s; }
+    .delay-s4 { animation-delay: 3.5s; }
+    .delay-s5 { animation-delay: 4.5s; }
+    .delay-cheat-sheet { animation-delay: 5.5s; }
+
+    /* Subtle pulse for the active packet */
+    @keyframes rowPulse {
+      0%, 100% { background-color: rgba(30, 58, 138, 0.6); }
+      50% { background-color: rgba(30, 58, 138, 1); }
+    }
+    .anim-active-row { animation: rowPulse 2s infinite; border: 1px solid rgba(96, 165, 250, 0.8); }
+  </style>
+</head>
+<body class="w-full h-screen overflow-hidden flex flex-col bg-[#0b1220] relative">
+
+  <div class="absolute inset-0 pointer-events-none z-0">
+    <svg aria-hidden="true" class="w-full h-full" preserveAspectRatio="xMidYMid slice" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="165" cy="120" fill="#60A5FA" opacity="0.12" r="92"></circle>
+      <circle cx="1160" cy="150" fill="#F59E0B" opacity="0.09" r="78"></circle>
+      <circle cx="1145" cy="615" fill="#34D399" opacity="0.10" r="135"></circle>
+      <circle cx="235" cy="650" fill="#A78BFA" opacity="0.10" r="60"></circle>
+      
+      <circle cx="640" cy="70" fill="#60A5FA" opacity="0.55" r="2.4" class="animate-pulse"></circle>
+      <circle cx="680" cy="95" fill="#34D399" opacity="0.55" r="2.0"></circle>
+      <circle cx="720" cy="77" fill="#F59E0B" opacity="0.55" r="2.4" class="animate-pulse" style="animation-delay: 0.5s;"></circle>
+      <circle cx="760" cy="103" fill="#A78BFA" opacity="0.50" r="2.2"></circle>
+      
+      <path d="M90 520 C260 450, 420 470, 610 400" fill="none" opacity="0.08" stroke="#60A5FA" stroke-width="2"></path>
+      <path d="M680 540 C850 460, 980 490, 1210 380" fill="none" opacity="0.08" stroke="#34D399" stroke-width="2"></path>
+      <path d="M120 250 C310 210, 450 250, 650 190" fill="none" opacity="0.07" stroke="#F59E0B" stroke-width="2"></path>
+    </svg>
+  </div>
+
+  <div class="relative z-10 flex flex-col w-full h-full max-w-[1536px] mx-auto px-6 lg:px-12 pt-6 lg:pt-8 pb-4">
+    
+    <div class="flex-shrink-0 flex items-start justify-between animate-fade-up">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 lg:w-12 lg:h-12 rounded-xl flex items-center justify-center transition-transform hover:scale-110 cursor-pointer" style="background:#111b33;">
+          <i class="fa-solid fa-circle-play text-yellow-300 text-lg lg:text-xl"></i>
+        </div>
+        <div class="flex flex-col leading-tight">
+          <p class="text-white font-extrabold tracking-tight text-xl lg:text-2xl">Live Demo: Capturing a Web Page Request</p>
+          <p class="text-blue-200 text-xs lg:text-sm mt-1">Start capture → open a website → stop → filter → inspect layers</p>
+        </div>
+      </div>
+      <div class="flex items-center space-x-3 hidden sm:flex">
+        <div class="px-4 py-2 rounded-full flex items-center space-x-2" style="background:#0f1830;border:1px solid rgba(255,255,255,0.10);">
+          <i class="fa-solid fa-filter text-green-300"></i>
+          <p class="text-blue-100 text-xs font-semibold">Beginner-friendly filters</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex-1 flex flex-row gap-4 lg:gap-6 mt-4 lg:mt-6 min-h-0 overflow-hidden">
+      
+      <div class="w-5/12 flex flex-col gap-4 lg:gap-5 animate-fade-up delay-100 overflow-y-auto pr-2 custom-scrollbar">
+        
+        <div class="rounded-3xl p-4 lg:p-5" style="background:#0f1830;border:1px solid rgba(255,255,255,0.12);">
+          <div class="flex items-center space-x-3 mb-3 lg:mb-4">
+            <div class="w-8 h-8 rounded-xl flex items-center justify-center shrink-0" style="background:#111b33;">
+              <i class="fa-solid fa-shield-halved text-green-300"></i>
+            </div>
+            <div>
+              <p class="text-white font-bold text-xs lg:text-sm">Before you start (2 notes)</p>
+              <p class="text-blue-200 text-[10px]">Keep it safe and avoid confusion</p>
+            </div>
+          </div>
+          <div class="space-y-2 lg:space-y-3">
+            <div class="flex items-start space-x-2">
+              <i class="fa-solid fa-check text-green-300 text-[10px] mt-0.5"></i>
+              <div>
+                <p class="text-white text-[10px] lg:text-xs font-semibold">Capture only on a network you own/have permission to test.</p>
+                <p class="text-blue-200 text-[9px] lg:text-[10px] leading-relaxed mt-0.5">Home Wi‑Fi is perfect for learning.</p>
+              </div>
+            </div>
+            <div class="flex items-start space-x-2">
+              <i class="fa-solid fa-lock text-yellow-300 text-[10px] mt-0.5"></i>
+              <div>
+                <p class="text-white text-[10px] lg:text-xs font-semibold">Most sites use <span class="text-blue-100">HTTPS</span>, so you’ll see <span class="text-blue-100">TLS</span>.</p>
+                <p class="text-blue-200 text-[9px] lg:text-[10px] leading-relaxed mt-0.5">That’s normal: the “outside labels” are still visible.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-3xl p-4 lg:p-5 flex-1 flex flex-col" style="background:#111b33;border:1px solid rgba(255,255,255,0.10);">
+          <div class="flex items-center justify-between mb-3 lg:mb-4">
+            <div class="flex items-center space-x-3">
+              <div class="w-8 h-8 rounded-xl flex items-center justify-center shrink-0" style="background:#0f1830;border:1px solid rgba(255,255,255,0.10);">
+                <i class="fa-solid fa-list-ol text-purple-200"></i>
+              </div>
+              <div>
+                <p class="text-white font-bold text-xs lg:text-sm">Action steps (do this exactly)</p>
+                <p class="text-blue-200 text-[10px]">Get a clean capture in under 60 seconds</p>
+              </div>
+            </div>
+            <div class="px-3 py-1 rounded-full hidden xl:block" style="background:#0f1830;border:1px solid rgba(255,255,255,0.10);">
+              <p class="text-blue-100 text-[9px] lg:text-[10px] font-semibold">Watch the sequence</p>
+            </div>
+          </div>
+          
+          <div class="flex-1 flex flex-col justify-center gap-2">
+            <div class="rounded-xl p-2.5 lg:p-3 flex items-center justify-between anim-step delay-s1" style="background:#0f1830;border:1px solid rgba(255,255,255,0.10);">
+              <div class="flex items-center space-x-3">
+                <div class="w-6 h-6 lg:w-8 lg:h-8 rounded-lg flex items-center justify-center shrink-0" style="background:#111b33;"><p class="text-white text-[10px] lg:text-xs font-extrabold">1</p></div>
+                <div>
+                  <p class="text-white text-[10px] lg:text-xs font-semibold">Open Wireshark → choose interface</p>
+                  <p class="text-blue-200 text-[9px] lg:text-[10px] mt-0.5">Pick Wi‑Fi or Ethernet.</p>
+                </div>
+              </div>
+              <i class="fa-solid fa-wifi text-blue-300 opacity-80 text-sm hidden sm:block mr-2"></i>
+            </div>
+            
+            <div class="rounded-xl p-2.5 lg:p-3 flex items-center justify-between anim-step delay-s2" style="background:#0f1830;border:1px solid rgba(255,255,255,0.10);">
+              <div class="flex items-center space-x-3">
+                <div class="w-6 h-6 lg:w-8 lg:h-8 rounded-lg flex items-center justify-center shrink-0" style="background:#111b33;"><p class="text-white text-[10px] lg:text-xs font-extrabold">2</p></div>
+                <div>
+                  <p class="text-white text-[10px] lg:text-xs font-semibold">Start capture (blue shark fin)</p>
+                  <p class="text-blue-200 text-[9px] lg:text-[10px] mt-0.5">Wait 2–3 seconds.</p>
+                </div>
+              </div>
+              <i class="fa-solid fa-shark text-blue-300 opacity-80 text-sm hidden sm:block mr-2"></i>
+            </div>
+            
+            <div class="rounded-xl p-2.5 lg:p-3 flex items-center justify-between anim-step delay-s3" style="background:#0f1830;border:1px solid rgba(255,255,255,0.10);">
+              <div class="flex items-center space-x-3">
+                <div class="w-6 h-6 lg:w-8 lg:h-8 rounded-lg flex items-center justify-center shrink-0" style="background:#111b33;"><p class="text-white text-[10px] lg:text-xs font-extrabold">3</p></div>
+                <div>
+                  <p class="text-white text-[10px] lg:text-xs font-semibold">Open browser → visit website</p>
+                  <p class="text-blue-200 text-[9px] lg:text-[10px] mt-0.5">Try <span class="text-blue-100">example.com</span>.</p>
+                </div>
+              </div>
+              <i class="fa-solid fa-globe text-green-300 opacity-80 text-sm hidden sm:block mr-2"></i>
+            </div>
+            
+            <div class="rounded-xl p-2.5 lg:p-3 flex items-center justify-between anim-step delay-s4" style="background:#0f1830;border:1px solid rgba(255,255,255,0.10);">
+              <div class="flex items-center space-x-3">
+                <div class="w-6 h-6 lg:w-8 lg:h-8 rounded-lg flex items-center justify-center shrink-0" style="background:#111b33;"><p class="text-white text-[10px] lg:text-xs font-extrabold">4</p></div>
+                <div>
+                  <p class="text-white text-[10px] lg:text-xs font-semibold">Stop capture (red square)</p>
+                  <p class="text-blue-200 text-[9px] lg:text-[10px] mt-0.5">Stopping prevents noise.</p>
+                </div>
+              </div>
+              <i class="fa-solid fa-stop text-red-400 opacity-80 text-sm hidden sm:block mr-2"></i>
+            </div>
+            
+            <div class="rounded-xl p-2.5 lg:p-3 flex items-center justify-between anim-step delay-s5" style="background:#0f1830;border:1px solid rgba(255,255,255,0.10);">
+              <div class="flex items-center space-x-3">
+                <div class="w-6 h-6 lg:w-8 lg:h-8 rounded-lg flex items-center justify-center shrink-0" style="background:#111b33;"><p class="text-white text-[10px] lg:text-xs font-extrabold">5</p></div>
+                <div>
+                  <p class="text-white text-[10px] lg:text-xs font-semibold">Filter to find “the good stuff”</p>
+                  <p class="text-blue-200 text-[9px] lg:text-[10px] mt-0.5">Use DNS, TLS, or HTTP.</p>
+                </div>
+              </div>
+              <i class="fa-solid fa-filter text-purple-300 opacity-80 text-sm hidden sm:block mr-2"></i>
+            </div>
+          </div>
+          
+          <div class="mt-3 lg:mt-4 rounded-xl p-3 flex items-start space-x-2 anim-step delay-cheat-sheet" style="background:#0b1220;border:1px dashed rgba(255,255,255,0.16);">
+            <i class="fa-solid fa-lightbulb text-yellow-300 text-[10px] mt-0.5"></i>
+            <div class="flex-1">
+              <p class="text-white text-[10px] lg:text-xs font-semibold">Beginner goal</p>
+              <p class="text-blue-200 text-[9px] lg:text-[10px] leading-relaxed mt-0.5">Don’t try to read everything. Find <span class="text-blue-100 font-semibold">one request</span>, then expand layers in the middle pane.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="w-7/12 flex flex-col gap-4 lg:gap-6 animate-fade-up delay-200 overflow-y-auto pr-2 custom-scrollbar">
+        
+        <div class="rounded-3xl p-4 lg:p-6 flex flex-col" style="background:#0f1830;border:1px solid rgba(255,255,255,0.12);">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center space-x-3">
+              <div class="w-10 h-10 rounded-2xl flex items-center justify-center" style="background:#111b33;">
+                <i class="fa-solid fa-desktop text-green-300"></i>
+              </div>
+              <div>
+                <p class="text-white font-bold text-xs lg:text-sm">What you should see (simplified)</p>
+                <p class="text-blue-200 text-[10px] lg:text-xs">Filter bar narrows thousands of packets down</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="rounded-2xl lg:rounded-3xl p-4 lg:p-5 flex flex-col flex-1" style="background:#111b33;border:1px solid rgba(255,255,255,0.10);">
+            <div class="flex items-center justify-between mb-3 lg:mb-4">
+              <div class="flex items-center space-x-2">
+                <div class="w-8 h-8 rounded-xl flex items-center justify-center" style="background:#0f1830;border:1px solid rgba(255,255,255,0.10);">
+                  <i class="fa-solid fa-shark text-blue-300 text-[10px]"></i>
+                </div>
+                <div>
+                  <p class="text-white text-[11px] lg:text-xs font-extrabold">Wireshark (Demo Capture)</p>
+                </div>
+              </div>
+              <div class="flex items-center space-x-1.5 hidden sm:flex">
+                <div class="w-2.5 h-2.5 rounded-full bg-yellow-500 opacity-80"></div>
+                <div class="w-2.5 h-2.5 rounded-full bg-green-500 opacity-80"></div>
+                <div class="w-2.5 h-2.5 rounded-full bg-blue-500 opacity-80"></div>
+              </div>
+            </div>
+            
+            <div class="rounded-xl px-3 py-2.5 flex items-center justify-between mb-3" style="background:#0f1830;border:1px solid rgba(34,197,94,0.45);">
+              <div class="flex items-center space-x-2">
+                <i class="fa-solid fa-filter text-green-300 text-[10px]"></i>
+                <p class="text-white text-[10px] lg:text-xs font-bold">Display filter: <span class="text-blue-200 font-normal ml-1">tls</span></p>
+              </div>
+              <div class="px-3 py-1 rounded-lg flex items-center space-x-1.5" style="background:#0b1220;border:1px dashed rgba(255,255,255,0.18);">
+                <p class="text-green-200 text-[9px] lg:text-[10px] font-extrabold mono">tls</p>
+                <p class="text-blue-200 text-[9px] lg:text-[10px] font-semibold mono">or</p>
+                <p class="text-green-200 text-[9px] lg:text-[10px] font-extrabold mono">http</p>
+              </div>
+            </div>
+            
+            <div class="rounded-xl p-3 flex-1 flex flex-col" style="background:#0b1220;border:1px solid rgba(255,255,255,0.10);">
+              <div class="flex items-center justify-between mb-2">
+                <div class="flex items-center space-x-2">
+                  <i class="fa-solid fa-rectangle-list text-blue-300 text-[10px]"></i>
+                  <p class="text-white text-[10px] lg:text-xs font-bold">Packet List</p>
+                </div>
+              </div>
+              
+              <div class="flex-1 flex flex-col gap-1.5">
+                <div class="rounded-lg px-2 py-1.5 flex items-center justify-between" style="background:#111b33;border:1px solid rgba(52,211,153,0.20);">
+                  <p class="text-white text-[9px] lg:text-[11px] font-semibold truncate">112 • 12.031 • 192.168.1.50 → 93.184.216.34 • <span class="text-green-200 font-extrabold">TLS</span> • Client Hello</p>
+                </div>
+                <div class="rounded-lg px-2 py-1.5 flex items-center justify-between anim-active-row">
+                  <p class="text-white text-[9px] lg:text-[11px] font-semibold truncate">113 • 12.044 • 93.184.216.34 → 192.168.1.50 • <span class="text-green-200 font-extrabold">TLS</span> • Server Hello</p>
+                  <p class="text-blue-200 text-[8px] font-bold uppercase tracking-wider ml-2 hidden sm:block">Click</p>
+                </div>
+                <div class="rounded-lg px-2 py-1.5 flex items-center justify-between" style="background:#111b33;border:1px solid rgba(255,255,255,0.08);">
+                  <p class="text-white text-[9px] lg:text-[11px] font-semibold truncate">114 • 12.120 • 192.168.1.50 → 93.184.216.34 • <span class="text-blue-200 font-extrabold">TCP</span> • [ACK]</p>
+                </div>
+              </div>
+              
+              <div class="mt-2 rounded-lg px-2 py-1.5 flex items-start space-x-2" style="background:#0f1830;border:1px dashed rgba(255,255,255,0.16);">
+                <i class="fa-solid fa-circle-info text-blue-300 text-[10px] mt-0.5"></i>
+                <p class="text-blue-200 text-[9px] lg:text-[10px] leading-snug">Tip: If you don’t see <span class="text-blue-100 font-semibold">http</span>, use <span class="text-blue-100 font-semibold">tls</span> (HTTPS) and inspect the layers instead.</p>
+              </div>
+            </div>
+
+            <div class="mt-3 lg:mt-4 grid grid-cols-2 gap-2 lg:gap-3 shrink-0">
+              <div class="rounded-xl p-3" style="background:#0f1830;border:1px solid rgba(255,255,255,0.10);">
+                <div class="flex items-center space-x-2 mb-1">
+                  <i class="fa-solid fa-mouse-pointer text-yellow-300 text-[10px]"></i>
+                  <p class="text-white text-[10px] lg:text-xs font-bold">Next action</p>
+                </div>
+                <p class="text-blue-200 text-[9px] lg:text-[10px] leading-snug">Click a <span class="text-blue-100">TLS</span> packet → expand layers below.</p>
+              </div>
+              <div class="rounded-xl p-3" style="background:#0f1830;border:1px solid rgba(255,255,255,0.10);">
+                <div class="flex items-center space-x-2 mb-1">
+                  <i class="fa-solid fa-route text-purple-200 text-[10px]"></i>
+                  <p class="text-white text-[10px] lg:text-xs font-bold">What you’ll learn</p>
+                </div>
+                <p class="text-blue-200 text-[9px] lg:text-[10px] leading-snug">Where <span class="text-blue-100">IP</span>, <span class="text-blue-100">ports</span>, and <span class="text-blue-100">TLS</span> live in real data.</p>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+
+        <div class="rounded-3xl p-4 lg:p-6 flex-1 flex flex-col anim-step delay-cheat-sheet" style="background:#111b33;border:1px solid rgba(255,255,255,0.10);">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center space-x-3">
+              <div class="w-10 h-10 rounded-2xl flex items-center justify-center" style="background:#0f1830;border:1px solid rgba(255,255,255,0.10);">
+                <i class="fa-solid fa-book text-blue-300"></i>
+              </div>
+              <div>
+                <p class="text-white font-bold text-xs lg:text-sm">Beginner filter cheat sheet</p>
+                <p class="text-blue-200 text-[10px] lg:text-xs">Type these into the Display Filter bar</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="grid grid-cols-2 gap-2 lg:gap-3 h-full">
+            
+            <div class="rounded-xl p-3 flex flex-col justify-between" style="background:#0f1830;border:1px solid rgba(255,255,255,0.10);">
+              <div>
+                <div class="flex items-center justify-between mb-2">
+                  <div class="flex items-center space-x-1.5">
+                    <i class="fa-solid fa-globe text-green-300 text-[10px]"></i>
+                    <p class="text-white text-[10px] lg:text-xs font-semibold">Web (HTTP)</p>
+                  </div>
+                </div>
+                <div class="rounded-lg px-2 py-1.5 inline-block" style="background:#111b33;border:1px dashed rgba(255,255,255,0.18);">
+                  <p class="text-green-200 text-[10px] lg:text-xs font-extrabold mono">http</p>
+                </div>
+              </div>
+              <p class="text-blue-200 text-[9px] lg:text-[10px] mt-2 leading-snug">Unencrypted requests.</p>
+            </div>
+            
+            <div class="rounded-xl p-3 flex flex-col justify-between" style="background:#0f1830;border:1px solid rgba(255,255,255,0.10);">
+              <div>
+                <div class="flex items-center justify-between mb-2">
+                  <div class="flex items-center space-x-1.5">
+                    <i class="fa-solid fa-lock text-yellow-300 text-[10px]"></i>
+                    <p class="text-white text-[10px] lg:text-xs font-semibold">Web (HTTPS)</p>
+                  </div>
+                </div>
+                <div class="rounded-lg px-2 py-1.5 inline-block" style="background:#111b33;border:1px dashed rgba(255,255,255,0.18);">
+                  <p class="text-green-200 text-[10px] lg:text-xs font-extrabold mono">tls</p>
+                </div>
+              </div>
+              <p class="text-blue-200 text-[9px] lg:text-[10px] mt-2 leading-snug">Encrypted handshakes.</p>
+            </div>
+            
+            <div class="rounded-xl p-3 flex flex-col justify-between" style="background:#0f1830;border:1px solid rgba(255,255,255,0.10);">
+              <div>
+                <div class="flex items-center space-x-1.5 mb-2">
+                  <i class="fa-solid fa-network-wired text-blue-300 text-[10px]"></i>
+                  <p class="text-white text-[10px] lg:text-xs font-semibold">HTTPS by port</p>
+                </div>
+                <div class="rounded-lg px-2 py-1.5 inline-block" style="background:#111b33;border:1px dashed rgba(255,255,255,0.18);">
+                  <p class="text-green-200 text-[10px] lg:text-xs font-extrabold mono">tcp.port==443</p>
+                </div>
+              </div>
+              <p class="text-blue-200 text-[9px] lg:text-[10px] mt-2 leading-snug">Finds web traffic by port.</p>
+            </div>
+            
+            <div class="rounded-xl p-3 flex flex-col justify-between" style="background:#0f1830;border:1px solid rgba(255,255,255,0.10);">
+              <div>
+                <div class="flex items-center space-x-1.5 mb-2">
+                  <i class="fa-solid fa-magnifying-glass text-purple-200 text-[10px]"></i>
+                  <p class="text-white text-[10px] lg:text-xs font-semibold">Name lookups</p>
+                </div>
+                <div class="rounded-lg px-2 py-1.5 inline-block" style="background:#111b33;border:1px dashed rgba(255,255,255,0.18);">
+                  <p class="text-green-200 text-[10px] lg:text-xs font-extrabold mono">dns</p>
+                </div>
+              </div>
+              <p class="text-blue-200 text-[9px] lg:text-[10px] mt-2 leading-snug">"What IP is this?"</p>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="flex-shrink-0 flex items-center justify-between mt-auto animate-fade-up delay-300 w-full pb-2 pt-2">
+      <div class="flex items-center space-x-3">
+        <div class="w-2 h-2 rounded-full animate-pulse" style="background:#34D399;"></div>
+        <p class="text-blue-200 text-[10px] lg:text-xs">Section 4: Wireshark Demo</p>
+      </div>
+      <div class="flex items-center space-x-3 hidden sm:flex">
+        <p class="text-blue-200 text-[10px] lg:text-xs">Section 4 progress</p>
+        <div class="w-16 h-1 rounded-full overflow-hidden" style="background:#1f2a44;">
+          <div class="h-full rounded-full" style="background:#60A5FA; width: 75%;"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <style>
+    .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+    .custom-scrollbar:hover::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); }
+  </style>
+
+  <script>
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'ArrowRight') {
+        window.location.href = 'slide16.html';
+      } else if (event.key === 'ArrowLeft') {
+        window.location.href = 'slide14.html';
+      }
+    });
+  </script>
+</body>
+</html>

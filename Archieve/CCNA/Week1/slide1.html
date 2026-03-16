@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+  <style>
+    * { box-sizing: border-box; }
+    /* Prevent scrolling if the screen gets slightly too small */
+    body { margin: 0; background: #0b1220; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; overflow: hidden; }
+    
+    /* Changed to 100vw and 100vh to fill the whole monitor/laptop screen */
+    .slide { width: 100vw; height: 100vh; position: relative; overflow: hidden; display: flex; justify-content: center; }
+    
+    /* --- Custom Animations --- */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInRight {
+      from { opacity: 0; transform: translateX(40px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+    @keyframes packetMove {
+      0% { left: 5%; opacity: 0; }
+      20% { opacity: 1; }
+      80% { opacity: 1; }
+      100% { left: 85%; opacity: 0; }
+    }
+
+    .animate-fade-up { animation: fadeInUp 0.8s ease-out forwards; opacity: 0; }
+    .animate-fade-right { animation: fadeInRight 0.8s ease-out forwards; opacity: 0; }
+    .animate-float { animation: float 4s ease-in-out infinite; }
+    .animate-packet { animation: packetMove 2s ease-in-out infinite; }
+    
+    .delay-100 { animation-delay: 100ms; }
+    .delay-300 { animation-delay: 300ms; }
+    .delay-500 { animation-delay: 500ms; }
+  </style>
+</head>
+<body>
+  <div class="slide">
+    <img alt="Global connectivity background" class="absolute inset-0 w-full h-full object-cover" src="https://page.gensparksite.com/slides_images/8c6905d7f1fcb7b28784ff90812450e7.webp"/>
+    
+    <div class="absolute inset-0" style="background:#0b1220; opacity:0.62;"></div>
+    
+    <div class="absolute inset-0 pointer-events-none">
+      <svg aria-hidden="true" class="w-full h-full" preserveAspectRatio="xMidYMid slice" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="980" cy="160" fill="#60A5FA" opacity="0.55" r="2.5" class="animate-pulse"></circle>
+        <circle cx="1020" cy="220" fill="#34D399" opacity="0.55" r="2" class="animate-pulse" style="animation-delay: 0.5s;"></circle>
+        <circle cx="1120" cy="200" fill="#F59E0B" opacity="0.55" r="2.5"></circle>
+        <circle cx="220" cy="560" fill="#60A5FA" opacity="0.45" r="2.5" class="animate-pulse" style="animation-delay: 1s;"></circle>
+        <circle cx="280" cy="520" fill="#34D399" opacity="0.45" r="2"></circle>
+        <circle cx="180" cy="500" fill="#F59E0B" opacity="0.45" r="2.5" class="animate-pulse" style="animation-delay: 0.2s;"></circle>
+      </svg>
+    </div>
+    
+    <div class="relative flex-1 flex flex-col w-full max-w-[1536px] mx-auto z-10">
+      
+      <div class="px-8 lg:px-16 pt-12 flex items-center justify-between animate-fade-up">
+        <div class="flex items-center space-x-10">
+          <div class="flex items-center space-x-3">
+            <div class="w-12 h-12 rounded-xl flex items-center justify-center transition-transform hover:scale-110 cursor-pointer" style="background:#111b33;">
+              <i class="fa-solid fa-network-wired text-blue-300 text-xl"></i>
+            </div>
+            <div class="flex flex-col leading-tight">
+              <p class="text-white font-semibold text-sm tracking-wide">Beginner Networking</p>
+              <p class="text-blue-200 text-xs opacity-90">OSI • TCP/IP • Wireshark</p>
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-full flex items-center justify-center transition-transform hover:-translate-y-1 cursor-pointer" style="background:#111b33;">
+            <i class="fa-solid fa-laptop text-green-300"></i>
+          </div>
+          <div class="w-10 h-10 rounded-full flex items-center justify-center transition-transform hover:-translate-y-1 cursor-pointer" style="background:#111b33;">
+            <i class="fa-solid fa-wifi text-orange-300"></i>
+          </div>
+          <div class="w-10 h-10 rounded-full flex items-center justify-center transition-transform hover:-translate-y-1 cursor-pointer" style="background:#111b33;">
+            <i class="fa-solid fa-mobile-screen-button text-purple-300"></i>
+          </div>
+        </div>
+      </div>
+      
+      <div class="flex-1 px-8 lg:px-16 pb-12 flex items-center">
+        <div class="w-full flex items-center justify-between">
+          
+          <div class="max-w-2xl">
+            <div class="inline-flex items-center space-x-3 px-4 py-2 rounded-full animate-fade-up delay-100" style="background:#111b33;">
+              <i class="fa-solid fa-box-open text-yellow-300"></i>
+              <p class="text-blue-100 text-sm font-semibold tracking-wide">Unboxing the OSI Model &amp; Wireshark</p>
+            </div>
+            <div class="mt-6 animate-fade-up delay-300">
+              <p class="text-white font-extrabold leading-tight text-5xl lg:text-6xl">
+                How the Internet<br/>Actually Works
+              </p>
+              <p class="mt-4 text-blue-100 text-lg lg:text-xl leading-relaxed" style="max-width: 44rem;">
+                A beginner’s guide to how your data travels across the world.
+              </p>
+            </div>
+            
+            <div class="mt-8 flex items-center space-x-4 animate-fade-up delay-500">
+              <div class="flex items-center space-x-3 px-4 py-3 rounded-2xl hover:bg-opacity-80 transition duration-300" style="background:#0f1830; border: 1px solid rgba(255,255,255,0.10);">
+                <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:#111b33;">
+                  <i class="fa-solid fa-envelope-open-text text-blue-300"></i>
+                </div>
+                <div>
+                  <p class="text-white text-sm font-semibold">Data = a “digital package”</p>
+                  <p class="text-blue-200 text-xs">We’ll follow it from your screen to the world.</p>
+                </div>
+              </div>
+              <div class="flex items-center space-x-3 px-4 py-3 rounded-2xl hover:bg-opacity-80 transition duration-300" style="background:#0f1830; border: 1px solid rgba(255,255,255,0.10);">
+                <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:#111b33;">
+                  <i class="fa-solid fa-layer-group text-green-300"></i>
+                </div>
+                <div>
+                  <p class="text-white text-sm font-semibold">Layers make it simple</p>
+                  <p class="text-blue-200 text-xs">Each layer has one clear job.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="w-5/12 flex items-center justify-end">
+            <div class="relative w-full animate-fade-right delay-500" style="max-width: 440px;">
+              <div class="rounded-3xl p-6" style="background:#0f1830; border: 1px solid rgba(255,255,255,0.12);">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center space-x-3">
+                    <div class="w-11 h-11 rounded-2xl flex items-center justify-center" style="background:#111b33;">
+                      <i class="fa-solid fa-paper-plane text-blue-300 text-lg"></i>
+                    </div>
+                    <div>
+                      <p class="text-white font-semibold text-sm">Your message</p>
+                      <p class="text-blue-200 text-xs">becomes packets</p>
+                    </div>
+                  </div>
+                  <div class="flex items-center space-x-2">
+                    <span class="w-2 h-2 rounded-full animate-pulse" style="background:#34D399;"></span>
+                    <span class="w-2 h-2 rounded-full animate-pulse" style="background:#60A5FA; animation-delay: 200ms;"></span>
+                    <span class="w-2 h-2 rounded-full animate-pulse" style="background:#F59E0B; animation-delay: 400ms;"></span>
+                  </div>
+                </div>
+                <div class="mt-6 flex items-center justify-between">
+                  <div class="flex flex-col items-center">
+                    <div class="w-20 h-20 rounded-3xl flex items-center justify-center" style="background:#111b33;">
+                      <i class="fa-solid fa-laptop text-blue-200 text-3xl"></i>
+                    </div>
+                    <p class="mt-3 text-blue-100 text-xs font-semibold">Laptop</p>
+                  </div>
+                  <div class="flex-1 px-5">
+                    <div class="relative h-10 rounded-2xl flex items-center overflow-hidden" style="background:#111b33;">
+                      
+                      <div class="absolute w-6 h-6 rounded-xl flex items-center justify-center animate-packet" style="background:#0f1830; border: 1px solid rgba(255,255,255,0.10); z-index: 10;">
+                        <i class="fa-solid fa-box text-yellow-300 text-sm"></i>
+                      </div>
+                      
+                      <div class="w-full text-center z-0 hidden lg:block">
+                        <p class="text-blue-200" style="font-size: 10px; font-weight: 600;">glowing “package” travels</p>
+                      </div>
+
+                      <div class="absolute right-3 text-blue-300 z-0">
+                        <i class="fa-solid fa-arrow-right"></i>
+                      </div>
+                    </div>
+                    <div class="mt-3 flex items-center justify-center space-x-2">
+                      <span class="w-2 h-2 rounded-full" style="background:#60A5FA;"></span>
+                      <span class="w-2 h-2 rounded-full" style="background:#60A5FA; opacity:0.75;"></span>
+                      <span class="w-2 h-2 rounded-full" style="background:#60A5FA; opacity:0.55;"></span>
+                      <span class="w-2 h-2 rounded-full" style="background:#60A5FA; opacity:0.35;"></span>
+                    </div>
+                  </div>
+                  <div class="flex flex-col items-center">
+                    <div class="w-20 h-20 rounded-3xl flex items-center justify-center" style="background:#111b33;">
+                      <i class="fa-solid fa-mobile-screen-button text-green-200 text-3xl"></i>
+                    </div>
+                    <p class="mt-3 text-blue-100 text-xs font-semibold">Phone</p>
+                  </div>
+                </div>
+                <div class="mt-6 rounded-2xl p-4" style="background:#111b33;">
+                  <div class="flex items-start space-x-3">
+                    <div class="w-9 h-9 rounded-xl flex items-center justify-center transition-transform hover:rotate-12" style="background:#0f1830; border: 1px solid rgba(255,255,255,0.10);">
+                      <i class="fa-solid fa-magnifying-glass text-purple-200"></i>
+                    </div>
+                    <div>
+                      <p class="text-white text-sm font-semibold">We’ll “see” it with Wireshark</p>
+                      <p class="text-blue-200 text-xs leading-relaxed">
+                        Like an X-ray: it shows the envelope and labels so we can learn what’s happening.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="absolute -top-5 -right-6 px-4 py-3 rounded-2xl shadow-lg animate-float" style="background:#111b33; border: 1px solid rgba(255,255,255,0.12);">
+                <div class="flex items-center space-x-3">
+                  <div class="w-9 h-9 rounded-xl flex items-center justify-center" style="background:#0f1830; border: 1px solid rgba(255,255,255,0.10);">
+                    <i class="fa-solid fa-globe text-blue-300"></i>
+                  </div>
+                  <div>
+                    <p class="text-white text-xs font-semibold">From you → worldwide</p>
+                    <p class="text-blue-200" style="font-size:11px;">in milliseconds</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+      
+      <div class="px-8 lg:px-16 pb-10 flex items-center justify-between animate-fade-up delay-500">
+        <div class="flex items-center space-x-3">
+          <div class="w-2 h-2 rounded-full animate-pulse" style="background:#34D399;"></div>
+          <p class="text-blue-200 text-xs">
+            Designed for complete beginners — no tech background needed
+          </p>
+        </div>
+        <div class="flex items-center space-x-3">
+          <p class="text-blue-200 text-xs">Section 1: The Big Picture</p>
+          <div class="w-10 h-1 rounded-full overflow-hidden" style="background:#1f2a44;">
+            <div class="h-full rounded-full" style="background:#60A5FA; width: 50%;"></div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'ArrowRight') {
+        window.location.href = 'slide2.html';
+      }
+    });
+  </script>
+</body>
+</html>

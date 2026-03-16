@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+  <style>
+    * { box-sizing: border-box; }
+    /* Let the browser handle the height natively */
+    body { margin: 0; background:#0b1220; font-family: Inter, system-ui, -apple-system, sans-serif; overflow: hidden; }
+    .slide { width: 100vw; height: 100vh; position: relative; overflow: hidden; display: flex; justify-content: center; background: #0b1220; }
+    
+    /* --- General Slide Animations --- */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-up { animation: fadeUp 0.6s ease-out forwards; opacity: 0; }
+    .delay-100 { animation-delay: 100ms; }
+    .delay-200 { animation-delay: 200ms; }
+    .delay-300 { animation-delay: 300ms; }
+  </style>
+</head>
+<body class="w-full h-screen overflow-hidden flex flex-col bg-[#0b1220] relative">
+
+  <div class="absolute inset-0 pointer-events-none z-0">
+    <svg aria-hidden="true" class="w-full h-full" preserveAspectRatio="xMidYMid slice" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="160" cy="120" fill="#60A5FA" opacity="0.12" r="92"></circle>
+      <circle cx="1160" cy="150" fill="#A78BFA" opacity="0.10" r="78"></circle>
+      <circle cx="1145" cy="615" fill="#34D399" opacity="0.10" r="135"></circle>
+      <circle cx="235" cy="650" fill="#F59E0B" opacity="0.09" r="60"></circle>
+      
+      <circle cx="640" cy="70" fill="#60A5FA" opacity="0.55" r="2.4" class="animate-pulse"></circle>
+      <circle cx="680" cy="95" fill="#34D399" opacity="0.55" r="2.0"></circle>
+      <circle cx="720" cy="77" fill="#F59E0B" opacity="0.55" r="2.4" class="animate-pulse" style="animation-delay: 0.5s;"></circle>
+      <circle cx="760" cy="103" fill="#A78BFA" opacity="0.50" r="2.2"></circle>
+      
+      <path d="M120 280 C260 220, 400 230, 560 180" fill="none" opacity="0.09" stroke="#60A5FA" stroke-width="2"></path>
+      <path d="M700 520 C860 450, 980 470, 1220 380" fill="none" opacity="0.09" stroke="#34D399" stroke-width="2"></path>
+    </svg>
+  </div>
+
+  <div class="relative z-10 flex flex-col w-full h-full max-w-[1536px] mx-auto px-6 lg:px-12 pt-6 lg:pt-8 pb-4">
+    
+    <div class="flex-shrink-0 flex items-start justify-between animate-fade-up">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 lg:w-12 lg:h-12 rounded-xl flex items-center justify-center transition-transform hover:scale-110 cursor-pointer" style="background:#111b33;">
+          <i class="fa-solid fa-layer-group text-blue-300 text-lg lg:text-xl"></i>
+        </div>
+        <div class="flex flex-col leading-tight">
+          <p class="text-white font-extrabold tracking-tight text-xl lg:text-2xl">The TCP/IP Model: The Modern Standard</p>
+          <p class="text-blue-200 text-xs lg:text-sm mt-1">Same internet idea, fewer layers: OSI (teaching) → TCP/IP (real-world stack)</p>
+        </div>
+      </div>
+      <div class="flex items-center space-x-3 hidden sm:flex">
+        <div class="px-4 py-2 rounded-full flex items-center space-x-2" style="background:#0f1830;border:1px solid rgba(255,255,255,0.10);">
+          <i class="fa-solid fa-diagram-project text-green-300"></i>
+          <p class="text-blue-100 text-xs font-semibold">OSI ↔ TCP/IP Mapping</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex-1 flex flex-row gap-6 mt-6 min-h-0 overflow-hidden">
+      
+      <div class="w-4/12 flex flex-col gap-4 lg:gap-6 animate-fade-up delay-100 overflow-y-auto pr-2 custom-scrollbar">
+        
+        <div class="rounded-3xl p-5 lg:p-6" style="background:#0f1830;border:1px solid rgba(255,255,255,0.12);">
+          <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 rounded-2xl flex items-center justify-center" style="background:#111b33;">
+              <i class="fa-solid fa-book-open text-yellow-300"></i>
+            </div>
+            <div>
+              <p class="text-white font-bold text-base lg:text-lg">Why two models exist</p>
+              <p class="text-blue-200 text-xs">A beginner-friendly way to organize “what happens”</p>
+            </div>
+          </div>
+          <div class="mt-4 lg:mt-5 space-y-3 lg:space-y-4">
+            <div class="flex items-start space-x-3 hover:bg-[#111b33] p-2 rounded-xl transition duration-300">
+              <div class="mt-0.5 w-7 h-7 rounded-xl flex items-center justify-center shrink-0" style="background:#111b33;">
+                <i class="fa-solid fa-graduation-cap text-blue-300 text-xs"></i>
+              </div>
+              <div>
+                <p class="text-white text-xs lg:text-sm font-semibold">OSI = a teaching blueprint</p>
+                <p class="text-blue-200 text-[11px] lg:text-xs leading-relaxed mt-0.5">Splits networking into <span class="text-blue-100 font-semibold">7</span> layers so it’s easier to learn.</p>
+              </div>
+            </div>
+            <div class="flex items-start space-x-3 hover:bg-[#111b33] p-2 rounded-xl transition duration-300">
+              <div class="mt-0.5 w-7 h-7 rounded-xl flex items-center justify-center shrink-0" style="background:#111b33;">
+                <i class="fa-solid fa-globe text-green-300 text-xs"></i>
+              </div>
+              <div>
+                <p class="text-white text-xs lg:text-sm font-semibold">TCP/IP = how it's actually built</p>
+                <p class="text-blue-200 text-[11px] lg:text-xs leading-relaxed mt-0.5">Real networks group those ideas into <span class="text-blue-100 font-semibold">4</span> practical layers.</p>
+              </div>
+            </div>
+            <div class="flex items-start space-x-3 hover:bg-[#111b33] p-2 rounded-xl transition duration-300">
+              <div class="mt-0.5 w-7 h-7 rounded-xl flex items-center justify-center shrink-0" style="background:#111b33;">
+                <i class="fa-solid fa-box-open text-orange-300 text-xs"></i>
+              </div>
+              <div>
+                <p class="text-white text-xs lg:text-sm font-semibold">Good news</p>
+                <p class="text-blue-200 text-[11px] lg:text-xs leading-relaxed mt-0.5">They describe the <span class="text-blue-100 font-semibold">same journey</span>—just with different “grouping.”</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-2xl p-4 flex items-start space-x-3" style="background:#111b33;border:1px solid rgba(255,255,255,0.10);">
+          <div class="w-8 h-8 rounded-xl flex items-center justify-center shrink-0" style="background:#0f1830;border:1px solid rgba(255,255,255,0.10);">
+            <i class="fa-solid fa-lightbulb text-yellow-300 text-xs"></i>
+          </div>
+          <div class="flex-1">
+            <p class="text-white text-xs lg:text-sm font-bold">Beginner memory trick</p>
+            <p class="text-blue-200 text-[10px] lg:text-[11px] leading-relaxed mt-0.5">
+              OSI is <span class="text-blue-100 font-semibold">more detailed</span> (7). TCP/IP is <span class="text-blue-100 font-semibold">more used</span> (4). They describe the exact same journey.
+            </p>
+          </div>
+        </div>
+
+        <div class="rounded-3xl p-5 lg:p-6 flex-1 flex flex-col justify-center" style="background:#0f1830;border:1px solid rgba(255,255,255,0.12);">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center space-x-3">
+              <div class="w-10 h-10 rounded-2xl flex items-center justify-center" style="background:#111b33;">
+                <i class="fa-solid fa-tags text-purple-200"></i>
+              </div>
+              <div>
+                <p class="text-white font-bold text-xs lg:text-sm">Names you’ll see in Wireshark</p>
+                <p class="text-blue-200 text-[10px] lg:text-xs">These line up nicely with TCP/IP</p>
+              </div>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-2 lg:gap-3">
+            <div class="rounded-xl p-3 hover:-translate-y-1 transition-transform" style="background:#111b33;border:1px solid rgba(255,255,255,0.10);">
+              <p class="text-white text-[10px] lg:text-xs font-semibold">Ethernet</p>
+              <p class="text-blue-200 text-[9px] mt-1">Link/Access</p>
+            </div>
+            <div class="rounded-xl p-3 hover:-translate-y-1 transition-transform" style="background:#111b33;border:1px solid rgba(255,255,255,0.10);">
+              <p class="text-white text-[10px] lg:text-xs font-semibold">IP</p>
+              <p class="text-blue-200 text-[9px] mt-1">Internet</p>
+            </div>
+            <div class="rounded-xl p-3 hover:-translate-y-1 transition-transform" style="background:#111b33;border:1px solid rgba(255,255,255,0.10);">
+              <p class="text-white text-[10px] lg:text-xs font-semibold">TCP / UDP</p>
+              <p class="text-blue-200 text-[9px] mt-1">Transport</p>
+            </div>
+            <div class="rounded-xl p-3 hover:-translate-y-1 transition-transform" style="background:#111b33;border:1px solid rgba(255,255,255,0.10);">
+              <p class="text-white text-[10px] lg:text-xs font-semibold">HTTP / TLS / DNS</p>
+              <p class="text-blue-200 text-[9px] mt-1">Application</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="w-8/12 flex flex-col gap-4 lg:gap-6 animate-fade-up delay-200 overflow-y-auto pr-2 custom-scrollbar">
+        
+        <div class="rounded-3xl p-4 lg:p-6 flex flex-col h-full" style="background:#0f1830;border:1px solid rgba(255,255,255,0.12);">
+          <div class="flex items-center justify-between mb-4 lg:mb-5">
+            <div class="flex items-center space-x-3">
+              <div class="w-10 h-10 rounded-2xl flex items-center justify-center" style="background:#111b33;">
+                <i class="fa-solid fa-shuffle text-green-300"></i>
+              </div>
+              <div>
+                <p class="text-white font-bold text-xs lg:text-sm">How OSI “squishes” into TCP/IP</p>
+                <p class="text-blue-200 text-[10px] lg:text-xs">Think: smaller boxes grouped into bigger boxes</p>
+              </div>
+            </div>
+            <div class="px-3 py-1.5 rounded-full hidden lg:block" style="background:#111b33;">
+              <p class="text-blue-200 text-[10px] lg:text-xs font-semibold">Left = OSI (7) • Right = TCP/IP (4)</p>
+            </div>
+          </div>
+          
+          <div class="flex-1 grid grid-cols-12 gap-2 lg:gap-4 min-h-0 h-full">
+            
+            <div class="col-span-4 grid grid-rows-7 gap-1.5 lg:gap-2 h-full">
+              <div class="rounded-xl p-2 flex items-center space-x-2" style="background:#111b33;border:1px solid rgba(255,255,255,0.10);">
+                <div class="w-6 h-6 lg:w-8 lg:h-8 rounded-lg flex items-center justify-center shrink-0" style="background:#0f1830;"><p class="text-blue-100 text-[9px] lg:text-[10px] font-extrabold">L7</p></div>
+                <div class="flex-1"><p class="text-white text-[10px] lg:text-xs font-semibold">Application</p></div>
+              </div>
+              <div class="rounded-xl p-2 flex items-center space-x-2" style="background:#111b33;border:1px solid rgba(255,255,255,0.10);">
+                <div class="w-6 h-6 lg:w-8 lg:h-8 rounded-lg flex items-center justify-center shrink-0" style="background:#0f1830;"><p class="text-green-200 text-[9px] lg:text-[10px] font-extrabold">L6</p></div>
+                <div class="flex-1"><p class="text-white text-[10px] lg:text-xs font-semibold">Presentation</p></div>
+              </div>
+              <div class="rounded-xl p-2 flex items-center space-x-2" style="background:#111b33;border:1px solid rgba(255,255,255,0.10);">
+                <div class="w-6 h-6 lg:w-8 lg:h-8 rounded-lg flex items-center justify-center shrink-0" style="background:#0f1830;"><p class="text-yellow-200 text-[9px] lg:text-[10px] font-extrabold">L5</p></div>
+                <div class="flex-1"><p class="text-white text-[10px] lg:text-xs font-semibold">Session</p></div>
+              </div>
+              <div class="rounded-xl p-2 flex items-center space-x-2" style="background:#111b33;border:1px solid rgba(255,255,255,0.10);">
+                <div class="w-6 h-6 lg:w-8 lg:h-8 rounded-lg flex items-center justify-center shrink-0" style="background:#0f1830;"><p class="text-orange-200 text-[9px] lg:text-[10px] font-extrabold">L4</p></div>
+                <div class="flex-1"><p class="text-white text-[10px] lg:text-xs font-semibold">Transport</p></div>
+              </div>
+              <div class="rounded-xl p-2 flex items-center space-x-2" style="background:#111b33;border:1px solid rgba(255,255,255,0.10);">
+                <div class="w-6 h-6 lg:w-8 lg:h-8 rounded-lg flex items-center justify-center shrink-0" style="background:#0f1830;"><p class="text-purple-200 text-[9px] lg:text-[10px] font-extrabold">L3</p></div>
+                <div class="flex-1"><p class="text-white text-[10px] lg:text-xs font-semibold">Network</p></div>
+              </div>
+              <div class="rounded-xl p-2 flex items-center space-x-2" style="background:#111b33;border:1px solid rgba(255,255,255,0.10);">
+                <div class="w-6 h-6 lg:w-8 lg:h-8 rounded-lg flex items-center justify-center shrink-0" style="background:#0f1830;"><p class="text-blue-200 text-[9px] lg:text-[10px] font-extrabold">L2</p></div>
+                <div class="flex-1"><p class="text-white text-[10px] lg:text-xs font-semibold">Data Link</p></div>
+              </div>
+              <div class="rounded-xl p-2 flex items-center space-x-2" style="background:#111b33;border:1px solid rgba(255,255,255,0.10);">
+                <div class="w-6 h-6 lg:w-8 lg:h-8 rounded-lg flex items-center justify-center shrink-0" style="background:#0f1830;"><p class="text-yellow-200 text-[9px] lg:text-[10px] font-extrabold">L1</p></div>
+                <div class="flex-1"><p class="text-white text-[10px] lg:text-xs font-semibold">Physical</p></div>
+              </div>
+            </div>
+
+            <div class="col-span-2 grid grid-rows-7 gap-1.5 lg:gap-2 h-full">
+              
+              <div class="row-span-3 relative w-full h-full flex items-center justify-end">
+                <div class="absolute border-l-2 border-t-2 border-b-2 border-blue-400 border-opacity-40 rounded-l-lg" style="left: 10%; width: 40%; top: 16.66%; bottom: 16.66%;"></div>
+                <div class="absolute border-t-2 border-blue-400 border-opacity-40 top-1/2 -translate-y-1/2" style="left: 50%; right: 10%;"></div>
+                <i class="fa-solid fa-play text-blue-400 opacity-70 absolute top-1/2 -translate-y-1/2" style="right: 0; font-size: 10px;"></i>
+              </div>
+              
+              <div class="row-span-1 relative w-full h-full flex items-center justify-end">
+                <div class="absolute border-t-2 border-orange-400 border-opacity-40 top-1/2 -translate-y-1/2" style="left: 10%; right: 10%;"></div>
+                <i class="fa-solid fa-play text-orange-400 opacity-70 absolute top-1/2 -translate-y-1/2" style="right: 0; font-size: 10px;"></i>
+              </div>
+              
+              <div class="row-span-1 relative w-full h-full flex items-center justify-end">
+                <div class="absolute border-t-2 border-purple-400 border-opacity-40 top-1/2 -translate-y-1/2" style="left: 10%; right: 10%;"></div>
+                <i class="fa-solid fa-play text-purple-400 opacity-70 absolute top-1/2 -translate-y-1/2" style="right: 0; font-size: 10px;"></i>
+              </div>
+              
+              <div class="row-span-2 relative w-full h-full flex items-center justify-end">
+                <div class="absolute border-l-2 border-t-2 border-b-2 border-green-400 border-opacity-40 rounded-l-lg" style="left: 10%; width: 40%; top: 25%; bottom: 25%;"></div>
+                <div class="absolute border-t-2 border-green-400 border-opacity-40 top-1/2 -translate-y-1/2" style="left: 50%; right: 10%;"></div>
+                <i class="fa-solid fa-play text-green-400 opacity-70 absolute top-1/2 -translate-y-1/2" style="right: 0; font-size: 10px;"></i>
+              </div>
+
+            </div>
+
+            <div class="col-span-6 grid grid-rows-7 gap-1.5 lg:gap-2 h-full">
+              
+              <div class="row-span-3 rounded-xl p-3 flex flex-col justify-center hover:-translate-y-1 transition-transform" style="background:#111b33;border:1px solid rgba(255,255,255,0.10);">
+                <div class="flex items-start space-x-3">
+                  <div class="w-8 h-8 rounded-xl flex items-center justify-center shrink-0" style="background:#0f1830;"><i class="fa-solid fa-window-maximize text-blue-300" style="font-size: 12px;"></i></div>
+                  <div>
+                    <p class="text-white text-[11px] lg:text-sm font-extrabold">Application</p>
+                    <p class="text-blue-200 text-[9px] lg:text-[10px] mt-1 leading-snug">Websites, email, video</p>
+                    <p class="text-blue-200 text-[8px] lg:text-[9px] mt-1.5 opacity-70">HTTP, DNS, SMTP</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="row-span-1 rounded-xl p-3 flex flex-col justify-center hover:-translate-y-1 transition-transform" style="background:#111b33;border:1px solid rgba(255,255,255,0.10);">
+                <div class="flex items-center space-x-3">
+                  <div class="w-8 h-8 rounded-xl flex items-center justify-center shrink-0" style="background:#0f1830;"><i class="fa-solid fa-truck-fast text-orange-300" style="font-size: 12px;"></i></div>
+                  <div>
+                    <p class="text-white text-[11px] lg:text-sm font-extrabold">Transport</p>
+                    <p class="text-blue-200 text-[8px] lg:text-[9px] mt-0.5 opacity-70">TCP, UDP</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="row-span-1 rounded-xl p-3 flex flex-col justify-center hover:-translate-y-1 transition-transform" style="background:#111b33;border:1px solid rgba(255,255,255,0.10);">
+                <div class="flex items-center space-x-3">
+                  <div class="w-8 h-8 rounded-xl flex items-center justify-center shrink-0" style="background:#0f1830;"><i class="fa-solid fa-route text-purple-200" style="font-size: 12px;"></i></div>
+                  <div>
+                    <p class="text-white text-[11px] lg:text-sm font-extrabold">Internet</p>
+                    <p class="text-blue-200 text-[8px] lg:text-[9px] mt-0.5 opacity-70">IP</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="row-span-2 rounded-xl p-3 flex flex-col justify-center hover:-translate-y-1 transition-transform" style="background:#111b33;border:1px solid rgba(255,255,255,0.10);">
+                <div class="flex items-start space-x-3">
+                  <div class="w-8 h-8 rounded-xl flex items-center justify-center shrink-0" style="background:#0f1830;"><i class="fa-solid fa-ethernet text-green-300" style="font-size: 12px;"></i></div>
+                  <div>
+                    <p class="text-white text-[11px] lg:text-sm font-extrabold">Network Access</p>
+                    <p class="text-blue-200 text-[9px] lg:text-[10px] mt-1 leading-snug">Local network &amp; wires</p>
+                    <p class="text-blue-200 text-[8px] lg:text-[9px] mt-1.5 opacity-70">Ethernet, Wi-Fi</p>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-2xl lg:rounded-3xl p-4 lg:p-5 flex items-center justify-between" style="background:#111b33;border:1px solid rgba(255,255,255,0.10);">
+          <div class="flex items-start space-x-3">
+            <div class="w-8 h-8 rounded-xl flex items-center justify-center shrink-0" style="background:#0f1830;border:1px solid rgba(255,255,255,0.10);">
+              <i class="fa-solid fa-check-double text-green-300 text-xs"></i>
+            </div>
+            <div>
+              <p class="text-white text-xs lg:text-sm font-bold">Key takeaway</p>
+              <p class="text-blue-200 text-[10px] lg:text-[11px] leading-relaxed mt-0.5">
+                TCP/IP combines OSI’s <span class="text-blue-100 font-semibold">top 3</span> layers and <span class="text-blue-100 font-semibold">bottom 2</span> layers, but keeps Transport &amp; IP separate.
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="flex-shrink-0 flex items-center justify-between mt-auto animate-fade-up delay-300 w-full pb-2 pt-2">
+      <div class="flex items-center space-x-3">
+        <div class="w-2 h-2 rounded-full animate-pulse" style="background:#34D399;"></div>
+        <p class="text-blue-200 text-[10px] lg:text-xs">Next: Encapsulation — how the layers wrap data like a gift</p>
+      </div>
+      <div class="flex items-center space-x-3 hidden sm:flex">
+        <p class="text-blue-200 text-[10px] lg:text-xs">Section 3 progress</p>
+        <div class="w-16 h-1 rounded-full overflow-hidden" style="background:#1f2a44;">
+          <div class="h-full rounded-full" style="background:#60A5FA; width: 25%;"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <style>
+    .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+    .custom-scrollbar:hover::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); }
+  </style>
+
+  <script>
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'ArrowRight') {
+        window.location.href = 'slide11.html';
+      } else if (event.key === 'ArrowLeft') {
+        window.location.href = 'slide9.html';
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+  <style>
+    * { box-sizing: border-box; }
+    /* Adaptive full-screen background */
+    body { margin: 0; background: #0b1220; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; overflow: hidden; }
+    .slide { width: 100vw; height: 100vh; position: relative; overflow: hidden; display: flex; justify-content: center; background: #0b1220; }
+    
+    /* --- General Slide Animations --- */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-up { animation: fadeUp 0.8s ease-out forwards; opacity: 0; }
+    .delay-100 { animation-delay: 100ms; }
+    .delay-300 { animation-delay: 300ms; }
+    .delay-500 { animation-delay: 500ms; }
+
+    /* --- Custom Scenario Animations (replaces the text box) --- */
+    @keyframes scrambledFade {
+      0% { opacity: 0; transform: scale(0.5); }
+      10%, 35% { opacity: 1; transform: scale(1); }
+      40%, 100% { opacity: 0; transform: scale(0.8); }
+    }
+    @keyframes rulebookPop {
+      0%, 35% { opacity: 0; transform: translate(-50%, -50%) scale(0); }
+      45%, 85% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+      95%, 100% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+    }
+    @keyframes checkmarkFade {
+      0%, 45% { opacity: 0; transform: scale(0.5); }
+      50%, 85% { opacity: 1; transform: scale(1); }
+      95%, 100% { opacity: 0; transform: scale(0.8); }
+    }
+
+    /* Animation Classes applied to the overlays on the image */
+    .anim-scrambled { animation: scrambledFade 6s infinite ease-in-out; }
+    .anim-rulebook { animation: rulebookPop 6s infinite cubic-bezier(0.175, 0.885, 0.32, 1.275); } /* subtle bounce effect */
+    .anim-checkmarks { animation: checkmarkFade 6s infinite ease-in-out; }
+  </style>
+</head>
+<body>
+  <div class="slide">
+    
+    <div class="absolute inset-0 pointer-events-none w-full h-full">
+      <svg aria-hidden="true" class="w-full h-full" preserveAspectRatio="xMidYMid slice" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="120" cy="90" fill="#60A5FA" opacity="0.12" r="70"></circle>
+        <circle cx="1180" cy="610" fill="#34D399" opacity="0.10" r="110"></circle>
+        <circle cx="1080" cy="110" fill="#F59E0B" opacity="0.10" r="55"></circle>
+        <circle cx="250" cy="650" fill="#A78BFA" opacity="0.10" r="45"></circle>
+        
+        <circle cx="620" cy="78" fill="#60A5FA" opacity="0.55" r="2.5" class="animate-pulse"></circle>
+        <circle cx="660" cy="102" fill="#34D399" opacity="0.55" r="2.0"></circle>
+        <circle cx="700" cy="82" fill="#F59E0B" opacity="0.55" r="2.5" class="animate-pulse" style="animation-delay: 0.5s;"></circle>
+        <circle cx="740" cy="110" fill="#A78BFA" opacity="0.50" r="2.2"></circle>
+      </svg>
+    </div>
+
+    <div class="relative flex-1 flex flex-col w-full max-w-[1536px] mx-auto z-10">
+      
+      <div class="px-8 lg:px-16 pt-10 flex items-start justify-between animate-fade-up">
+        <div class="flex items-center space-x-3">
+          <div class="w-12 h-12 rounded-xl flex items-center justify-center transition-transform hover:scale-110" style="background:#111b33;">
+            <i class="fa-solid fa-language text-blue-300 text-xl"></i>
+          </div>
+          <div class="flex flex-col leading-tight">
+            <p class="text-white font-extrabold tracking-tight" style="font-size:28px;">The Tower of Babel Problem</p>
+            <p class="text-blue-200 text-sm">Why do we need networking “models” and rules?</p>
+          </div>
+        </div>
+        <div class="flex items-center space-x-3">
+          <div class="px-4 py-2 rounded-full flex items-center space-x-2" style="background:#0f1830; border:1px solid rgba(255,255,255,0.10);">
+            <i class="fa-solid fa-circle-info text-green-300"></i>
+            <p class="text-blue-100 text-xs font-semibold">Section 1: The Big Picture</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex-1 px-8 lg:px-16 pb-10 pt-6 flex space-x-10">
+        
+        <div class="w-5/12 flex flex-col justify-center animate-fade-up delay-100">
+          <div class="rounded-3xl p-6" style="background:#0f1830; border:1px solid rgba(255,255,255,0.12);">
+            <div class="flex items-center space-x-3">
+              <div class="w-11 h-11 rounded-2xl flex items-center justify-center" style="background:#111b33;">
+                <i class="fa-solid fa-triangle-exclamation text-orange-300 text-lg"></i>
+              </div>
+              <div>
+                <p class="text-white font-bold" style="font-size:18px;">The core problem</p>
+                <p class="text-blue-200 text-xs">Different devices must “agree” on how to talk.</p>
+              </div>
+            </div>
+            <div class="mt-5 space-y-4">
+              <div class="flex items-start space-x-3 hover:bg-[#111b33] p-2 rounded-xl transition duration-300">
+                <div class="mt-1 w-8 h-8 rounded-xl flex items-center justify-center shrink-0" style="background:#111b33;">
+                  <i class="fa-solid fa-comment-dots text-blue-300"></i>
+                </div>
+                <div>
+                  <p class="text-white text-sm font-semibold">Imagine if every computer spoke a different language.</p>
+                  <p class="text-blue-200 text-xs leading-relaxed">Messages would be confusing, incomplete, or ignored.</p>
+                </div>
+              </div>
+              <div class="flex items-start space-x-3 hover:bg-[#111b33] p-2 rounded-xl transition duration-300">
+                <div class="mt-1 w-8 h-8 rounded-xl flex items-center justify-center shrink-0" style="background:#111b33;">
+                  <i class="fa-brands fa-apple text-green-300"></i>
+                </div>
+                <div>
+                  <p class="text-white text-sm font-semibold">A Mac couldn’t talk to a Windows PC.</p>
+                  <p class="text-blue-200 text-xs leading-relaxed">Even if the Wi‑Fi is “on,” they’d still misunderstand each other.</p>
+                </div>
+              </div>
+              <div class="flex items-start space-x-3 hover:bg-[#111b33] p-2 rounded-xl transition duration-300">
+                <div class="mt-1 w-8 h-8 rounded-xl flex items-center justify-center shrink-0" style="background:#111b33;">
+                  <i class="fa-solid fa-server text-purple-200"></i>
+                </div>
+                <div>
+                  <p class="text-white text-sm font-semibold">An iPhone couldn’t load a Google server.</p>
+                  <p class="text-blue-200 text-xs leading-relaxed">Because “how do I ask?” and “how do you answer?” wouldn’t match.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mt-6 rounded-3xl p-6" style="background:#111b33; border:1px solid rgba(255,255,255,0.10);">
+            <div class="flex items-center space-x-3">
+              <div class="w-11 h-11 rounded-2xl flex items-center justify-center" style="background:#0f1830; border:1px solid rgba(255,255,255,0.10);">
+                <i class="fa-solid fa-book text-yellow-300 text-lg"></i>
+              </div>
+              <div>
+                <p class="text-white font-bold" style="font-size:18px;">The solution</p>
+                <p class="text-blue-200 text-xs">Use shared rules called <span class="text-blue-100 font-semibold">protocols</span>.</p>
+              </div>
+            </div>
+            <div class="mt-4 flex items-start space-x-3">
+              <div class="w-8 h-8 rounded-xl flex items-center justify-center shrink-0" style="background:#0f1830; border:1px solid rgba(255,255,255,0.10);">
+                <i class="fa-solid fa-check text-green-300"></i>
+              </div>
+              <div>
+                <p class="text-blue-100 text-sm font-semibold">Networking models (OSI / TCP‑IP) organize these rules into layers.</p>
+                <p class="text-blue-200 text-xs leading-relaxed">So we can learn it step‑by‑step and fix problems faster.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="w-7/12 flex items-center justify-end animate-fade-up delay-300">
+          <div class="relative w-full">
+            <div class="rounded-3xl p-5" style="background:#0f1830; border:1px solid rgba(255,255,255,0.12);">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                  <div class="w-10 h-10 rounded-2xl flex items-center justify-center" style="background:#111b33;">
+                    <i class="fa-solid fa-diagram-project text-blue-300"></i>
+                  </div>
+                  <div>
+                    <p class="text-white font-bold text-sm">Analogy</p>
+                    <p class="text-blue-200 text-xs">A “translator rulebook” makes messages match</p>
+                  </div>
+                </div>
+                <div class="px-3 py-1.5 rounded-full" style="background:#111b33;">
+                  <p class="text-blue-200 text-xs font-semibold">Problem → Fix</p>
+                </div>
+              </div>
+              
+              <div class="mt-4 rounded-2xl overflow-hidden relative h-56 flex items-center justify-center" style="background: linear-gradient(135deg, #111b33 0%, #0b1220 100%); border:1px solid rgba(255,255,255,0.10);">
+                
+                <div class="absolute inset-0 flex justify-between items-center px-12 opacity-40">
+                  <i class="fa-solid fa-laptop text-7xl text-blue-300"></i>
+                  <div class="flex-1 border-t-2 border-dashed border-blue-400 mx-8"></div>
+                  <i class="fa-solid fa-server text-7xl text-green-300"></i>
+                </div>
+
+                <div class="absolute top-10 left-20 bg-red-500 text-white font-bold px-4 py-2 rounded-2xl shadow-lg anim-scrambled transform -rotate-12 z-20">
+                  <i class="fa-solid fa-comment-slash"></i> ?!#@
+                </div>
+                <div class="absolute top-10 right-20 bg-red-500 text-white font-bold px-4 py-2 rounded-2xl shadow-lg anim-scrambled transform rotate-12 z-20" style="animation-delay: 0.2s;">
+                  $*%! <i class="fa-solid fa-circle-question"></i>
+                </div>
+
+                <div class="absolute top-1/2 left-1/2 bg-yellow-400 text-blue-900 rounded-full w-20 h-20 flex items-center justify-center shadow-2xl anim-rulebook z-30">
+                  <i class="fa-solid fa-book-open text-3xl"></i>
+                </div>
+
+                <div class="absolute top-10 left-20 bg-green-500 text-white font-bold px-4 py-2 rounded-2xl shadow-lg anim-checkmarks transform -rotate-6 z-20">
+                  <i class="fa-solid fa-check-circle"></i> Got it!
+                </div>
+                <div class="absolute top-10 right-20 bg-green-500 text-white font-bold px-4 py-2 rounded-2xl shadow-lg anim-checkmarks transform rotate-6 z-20">
+                  <i class="fa-solid fa-check-circle"></i> Makes sense!
+                </div>
+              </div>
+
+              <div class="mt-4 grid grid-cols-3 gap-3">
+                <div class="rounded-2xl p-3 hover:-translate-y-1 transition-transform" style="background:#111b33;">
+                  <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-laptop text-blue-200"></i>
+                    <p class="text-white text-xs font-semibold">Device A</p>
+                  </div>
+                  <p class="text-blue-200 text-xs mt-1 leading-snug">Speaks “its own style” of messaging.</p>
+                </div>
+                <div class="rounded-2xl p-3 hover:-translate-y-1 transition-transform border border-yellow-500 border-opacity-30" style="background:#111b33;">
+                  <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-book-open text-yellow-300"></i>
+                    <p class="text-white text-xs font-semibold">Protocols</p>
+                  </div>
+                  <p class="text-blue-200 text-xs mt-1 leading-snug">Shared rules that translate &amp; organize.</p>
+                </div>
+                <div class="rounded-2xl p-3 hover:-translate-y-1 transition-transform" style="background:#111b33;">
+                  <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-mobile-screen-button text-green-200"></i>
+                    <p class="text-white text-xs font-semibold">Device B</p>
+                  </div>
+                  <p class="text-blue-200 text-xs mt-1 leading-snug">Understands because rules match.</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        
+      </div>
+
+      <div class="px-8 lg:px-16 pb-10 flex items-center justify-end animate-fade-up delay-500">
+        <div class="flex items-center space-x-3">
+          <p class="text-blue-200 text-xs">Next: the OSI Model (7 layers)</p>
+          <div class="w-12 h-1 rounded-full overflow-hidden" style="background:#1f2a44;">
+            <div class="h-full rounded-full" style="background:#60A5FA; width: 66%;"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'ArrowRight') {
+        window.location.href = 'slide3.html';
+      } else if (event.key === 'ArrowLeft') {
+        window.location.href = 'slide1.html';
+      }
+    });
+  </script>
+</body>
+</html>

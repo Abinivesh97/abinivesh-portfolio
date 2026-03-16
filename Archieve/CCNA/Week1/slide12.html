@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+  <style>
+    * { box-sizing: border-box; }
+    /* Let the browser handle the height natively */
+    body { margin: 0; background:#0b1220; font-family: Inter, system-ui, -apple-system, sans-serif; overflow: hidden; }
+    .slide { width: 100vw; height: 100vh; position: relative; overflow: hidden; display: flex; justify-content: center; background: #0b1220; }
+    
+    /* --- General Slide Animations --- */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-up { animation: fadeUp 0.6s ease-out forwards; opacity: 0; }
+    .delay-100 { animation-delay: 100ms; }
+    .delay-200 { animation-delay: 200ms; }
+    .delay-300 { animation-delay: 300ms; }
+
+    /* --- Synchronized Cascading Highlight Animation --- */
+    @keyframes glowSeq {
+      0%, 15% { 
+        background: #1e3a8a; 
+        border-color: var(--glow-color, #60A5FA); 
+        box-shadow: 0 0 15px var(--glow-color, rgba(96,165,250,0.5)); 
+        transform: scale(1.02) translateX(4px); 
+        z-index: 20; 
+      }
+      20%, 100% { 
+        background: #0f1830; 
+        border-color: rgba(255,255,255,0.1); 
+        box-shadow: none; 
+        transform: scale(1) translateX(0); 
+        z-index: 10; 
+      }
+    }
+    
+    /* Total cycle is 9 seconds (1.5s per step) */
+    .anim-s1 { --glow-color: #FDE68A; animation: glowSeq 9s infinite 0s ease-in-out; }    /* Yellow (App/Data) */
+    .anim-s2 { --glow-color: #FDBA74; animation: glowSeq 9s infinite 1.5s ease-in-out; }  /* Orange (Transport/Seg) */
+    .anim-s3 { --glow-color: #D8B4FE; animation: glowSeq 9s infinite 3.0s ease-in-out; }  /* Purple (Network/Packet) */
+    .anim-s4 { --glow-color: #93C5FD; animation: glowSeq 9s infinite 4.5s ease-in-out; }  /* Blue (Link/Frame) */
+    .anim-s5 { --glow-color: #86EFAC; animation: glowSeq 9s infinite 6.0s ease-in-out; }  /* Green (Phys/Bits) */
+    .anim-s6 { --glow-color: #F3F4F6; animation: glowSeq 9s infinite 7.5s ease-in-out; }  /* White (Server) */
+  </style>
+</head>
+<body class="w-full h-screen overflow-hidden flex flex-col bg-[#0b1220] relative">
+
+  <div class="absolute inset-0 pointer-events-none z-0">
+    <svg aria-hidden="true" class="w-full h-full" preserveAspectRatio="xMidYMid slice" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="165" cy="120" fill="#60A5FA" opacity="0.12" r="92"></circle>
+      <circle cx="1160" cy="150" fill="#F59E0B" opacity="0.09" r="78"></circle>
+      <circle cx="1145" cy="615" fill="#34D399" opacity="0.10" r="135"></circle>
+      <circle cx="235" cy="650" fill="#A78BFA" opacity="0.10" r="60"></circle>
+      <path d="M90 520 C260 450, 420 470, 610 400" fill="none" opacity="0.08" stroke="#60A5FA" stroke-width="2"></path>
+      <path d="M680 540 C850 460, 980 490, 1210 380" fill="none" opacity="0.08" stroke="#34D399" stroke-width="2"></path>
+      <path d="M120 250 C310 210, 450 250, 650 190" fill="none" opacity="0.07" stroke="#F59E0B" stroke-width="2"></path>
+    </svg>
+  </div>
+
+  <div class="relative z-10 flex flex-col w-full h-full max-w-[1536px] mx-auto px-6 lg:px-12 pt-6 lg:pt-8 pb-4">
+    
+    <div class="flex-shrink-0 flex items-start justify-between animate-fade-up">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 lg:w-12 lg:h-12 rounded-xl flex items-center justify-center transition-transform hover:scale-110 cursor-pointer" style="background:#111b33;">
+          <i class="fa-solid fa-gamepad text-yellow-300 text-lg lg:text-xl"></i>
+        </div>
+        <div class="flex flex-col leading-tight">
+          <p class="text-white font-extrabold tracking-tight text-xl lg:text-2xl">Follow the Data: A Real‑World Gaming Journey</p>
+          <p class="text-blue-200 text-xs lg:text-sm mt-1">You press <span class="text-blue-100 font-semibold">Jump</span> → the network delivers it to the game server</p>
+        </div>
+      </div>
+      <div class="flex items-center space-x-3 hidden sm:flex">
+        <div class="px-4 py-2 rounded-full flex items-center space-x-2" style="background:#0f1830;border:1px solid rgba(255,255,255,0.10);">
+          <i class="fa-solid fa-list-ol text-green-300"></i>
+          <p class="text-blue-100 text-xs font-semibold">6 steps • Layer-by-layer</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex-1 flex flex-row gap-4 lg:gap-6 mt-4 lg:mt-6 min-h-0 overflow-hidden">
+      
+      <div class="w-3/12 flex flex-col gap-4 lg:gap-5 animate-fade-up delay-100 overflow-y-auto pr-2 custom-scrollbar">
+        
+        <div class="rounded-3xl p-4 lg:p-5" style="background:#0f1830;border:1px solid rgba(255,255,255,0.12);">
+          <div class="flex items-center space-x-3 mb-4">
+            <div class="w-8 h-8 rounded-xl flex items-center justify-center" style="background:#111b33;">
+              <i class="fa-solid fa-hand-pointer text-blue-300"></i>
+            </div>
+            <div>
+              <p class="text-white font-bold text-sm lg:text-base">Beginner scenario</p>
+              <p class="text-blue-200 text-[10px]">A tiny “Jump” uses all layers</p>
+            </div>
+          </div>
+          <div class="space-y-3">
+            <div class="flex items-start space-x-2 hover:bg-[#111b33] p-2 rounded-xl transition duration-300">
+              <i class="fa-solid fa-bolt text-yellow-300 mt-1 text-[10px]"></i>
+              <div>
+                <p class="text-white text-[10px] lg:text-xs font-semibold">Games prefer speed</p>
+                <p class="text-blue-200 text-[9px] lg:text-[10px] leading-snug mt-0.5">They use <span class="text-blue-100">UDP</span> for quick updates.</p>
+              </div>
+            </div>
+            <div class="flex items-start space-x-2 hover:bg-[#111b33] p-2 rounded-xl transition duration-300">
+              <i class="fa-solid fa-box text-green-300 mt-1 text-[10px]"></i>
+              <div>
+                <p class="text-white text-[10px] lg:text-xs font-semibold">Packaging names change</p>
+                <p class="text-blue-200 text-[9px] lg:text-[10px] leading-snug mt-0.5">Data → Segment → Packet → Frame → Bits.</p>
+              </div>
+            </div>
+            <div class="flex items-start space-x-2 hover:bg-[#111b33] p-2 rounded-xl transition duration-300">
+              <i class="fa-solid fa-circle-info text-purple-200 mt-1 text-[10px]"></i>
+              <div>
+                <p class="text-white text-[10px] lg:text-xs font-semibold">Who reads what?</p>
+                <p class="text-blue-200 text-[9px] lg:text-[10px] leading-snug mt-0.5">Switches (MAC). Routers (IP). Server (Data).</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-3xl p-4 lg:p-5 flex-1" style="background:#111b33;border:1px solid rgba(255,255,255,0.10);">
+          <div class="flex items-center space-x-2 mb-3">
+            <i class="fa-solid fa-tags text-orange-300"></i>
+            <p class="text-white text-xs lg:text-sm font-bold">Quick legend</p>
+          </div>
+          <div class="flex flex-col gap-2 h-full justify-center">
+            <div class="rounded-xl p-2 lg:p-3" style="background:#0f1830;border:1px solid rgba(255,255,255,0.10);">
+              <p class="text-white text-[10px] font-semibold">UDP segment</p>
+              <p class="text-blue-200 text-[9px] mt-0.5">“Fast delivery” + ports</p>
+            </div>
+            <div class="rounded-xl p-2 lg:p-3" style="background:#0f1830;border:1px solid rgba(255,255,255,0.10);">
+              <p class="text-white text-[10px] font-semibold">IP packet</p>
+              <p class="text-blue-200 text-[9px] mt-0.5">“To/From IP”</p>
+            </div>
+            <div class="rounded-xl p-2 lg:p-3" style="background:#0f1830;border:1px solid rgba(255,255,255,0.10);">
+              <p class="text-white text-[10px] font-semibold">Wi‑Fi frame</p>
+              <p class="text-blue-200 text-[9px] mt-0.5">“To/From MAC”</p>
+            </div>
+            <div class="rounded-xl p-2 lg:p-3" style="background:#0f1830;border:1px solid rgba(255,255,255,0.10);">
+              <p class="text-white text-[10px] font-semibold">Bits</p>
+              <p class="text-blue-200 text-[9px] mt-0.5">Electricity/light/radio</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="w-5/12 flex flex-col animate-fade-up delay-200 overflow-y-auto pr-2 custom-scrollbar">
+        <div class="rounded-3xl p-4 lg:p-5 flex flex-col h-full" style="background:#0f1830;border:1px solid rgba(255,255,255,0.12);">
+          
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center space-x-2">
+              <i class="fa-solid fa-route text-green-300"></i>
+              <p class="text-white font-bold text-xs lg:text-sm">The 6-Step Journey</p>
+            </div>
+            <div class="px-2 py-1 rounded-full hidden xl:block" style="background:#111b33;">
+              <p class="text-blue-200 text-[9px] font-semibold">Watch the cascade</p>
+            </div>
+          </div>
+          
+          <div class="relative flex-1 flex flex-col justify-between py-2 pl-4 lg:pl-6">
+            
+            <div class="absolute left-[13px] lg:left-[21px] top-4 bottom-4 w-1 bg-[#111b33] rounded-full z-0"></div>
+
+            <div class="relative flex items-center space-x-3 w-full">
+              <div class="w-6 h-6 lg:w-8 lg:h-8 rounded-full bg-[#1e3a8a] border-2 border-yellow-300 z-10 flex items-center justify-center shrink-0 shadow-[0_0_10px_rgba(253,230,138,0.5)]">
+                <p class="text-white text-[10px] lg:text-xs font-bold">1</p>
+              </div>
+              <div class="flex-1 rounded-xl p-2 lg:p-3 flex items-center justify-between anim-s1" style="background:#0f1830;border:1px solid rgba(255,255,255,0.10);">
+                <div>
+                  <p class="text-white text-[10px] lg:text-xs font-bold">Game creates message (L7)</p>
+                  <p class="text-blue-200 text-[9px] lg:text-[10px] mt-0.5 leading-snug">"Jump" → becomes <span class="text-white font-semibold">Data</span></p>
+                </div>
+                <i class="fa-solid fa-gamepad text-yellow-300 text-xs opacity-80 hidden lg:block"></i>
+              </div>
+            </div>
+
+            <div class="relative flex items-center space-x-3 w-full">
+              <div class="w-6 h-6 lg:w-8 lg:h-8 rounded-full bg-[#1e3a8a] border-2 border-orange-300 z-10 flex items-center justify-center shrink-0 shadow-[0_0_10px_rgba(253,186,116,0.5)]">
+                <p class="text-white text-[10px] lg:text-xs font-bold">2</p>
+              </div>
+              <div class="flex-1 rounded-xl p-2 lg:p-3 flex items-center justify-between anim-s2" style="background:#0f1830;border:1px solid rgba(255,255,255,0.10);">
+                <div>
+                  <p class="text-white text-[10px] lg:text-xs font-bold">UDP wraps it (L4)</p>
+                  <p class="text-blue-200 text-[9px] lg:text-[10px] mt-0.5 leading-snug">Adds ports → becomes <span class="text-white font-semibold">Segment</span></p>
+                </div>
+                <i class="fa-solid fa-truck-fast text-orange-300 text-xs opacity-80 hidden lg:block"></i>
+              </div>
+            </div>
+
+            <div class="relative flex items-center space-x-3 w-full">
+              <div class="w-6 h-6 lg:w-8 lg:h-8 rounded-full bg-[#1e3a8a] border-2 border-purple-300 z-10 flex items-center justify-center shrink-0 shadow-[0_0_10px_rgba(216,180,254,0.5)]">
+                <p class="text-white text-[10px] lg:text-xs font-bold">3</p>
+              </div>
+              <div class="flex-1 rounded-xl p-2 lg:p-3 flex items-center justify-between anim-s3" style="background:#0f1830;border:1px solid rgba(255,255,255,0.10);">
+                <div>
+                  <p class="text-white text-[10px] lg:text-xs font-bold">Router adds IP (L3)</p>
+                  <p class="text-blue-200 text-[9px] lg:text-[10px] mt-0.5 leading-snug">Adds IPs → becomes <span class="text-white font-semibold">Packet</span></p>
+                </div>
+                <i class="fa-solid fa-route text-purple-300 text-xs opacity-80 hidden lg:block"></i>
+              </div>
+            </div>
+
+            <div class="relative flex items-center space-x-3 w-full">
+              <div class="w-6 h-6 lg:w-8 lg:h-8 rounded-full bg-[#1e3a8a] border-2 border-blue-300 z-10 flex items-center justify-center shrink-0 shadow-[0_0_10px_rgba(147,197,253,0.5)]">
+                <p class="text-white text-[10px] lg:text-xs font-bold">4</p>
+              </div>
+              <div class="flex-1 rounded-xl p-2 lg:p-3 flex items-center justify-between anim-s4" style="background:#0f1830;border:1px solid rgba(255,255,255,0.10);">
+                <div>
+                  <p class="text-white text-[10px] lg:text-xs font-bold">Local MAC tag (L2)</p>
+                  <p class="text-blue-200 text-[9px] lg:text-[10px] mt-0.5 leading-snug">Wi-Fi wraps it → becomes <span class="text-white font-semibold">Frame</span></p>
+                </div>
+                <i class="fa-solid fa-network-wired text-blue-300 text-xs opacity-80 hidden lg:block"></i>
+              </div>
+            </div>
+
+            <div class="relative flex items-center space-x-3 w-full">
+              <div class="w-6 h-6 lg:w-8 lg:h-8 rounded-full bg-[#1e3a8a] border-2 border-green-300 z-10 flex items-center justify-center shrink-0 shadow-[0_0_10px_rgba(134,239,172,0.5)]">
+                <p class="text-white text-[10px] lg:text-xs font-bold">5</p>
+              </div>
+              <div class="flex-1 rounded-xl p-2 lg:p-3 flex items-center justify-between anim-s5" style="background:#0f1830;border:1px solid rgba(255,255,255,0.10);">
+                <div>
+                  <p class="text-white text-[10px] lg:text-xs font-bold">Sent as signals (L1)</p>
+                  <p class="text-blue-200 text-[9px] lg:text-[10px] mt-0.5 leading-snug">Sent to ISP → becomes <span class="text-white font-semibold">Bits</span></p>
+                </div>
+                <i class="fa-solid fa-wave-square text-green-300 text-xs opacity-80 hidden lg:block"></i>
+              </div>
+            </div>
+
+            <div class="relative flex items-center space-x-3 w-full">
+              <div class="w-6 h-6 lg:w-8 lg:h-8 rounded-full bg-[#1e3a8a] border-2 border-gray-200 z-10 flex items-center justify-center shrink-0 shadow-[0_0_10px_rgba(243,244,246,0.5)]">
+                <p class="text-white text-[10px] lg:text-xs font-bold">6</p>
+              </div>
+              <div class="flex-1 rounded-xl p-2 lg:p-3 flex items-center justify-between anim-s6" style="background:#0f1830;border:1px solid rgba(255,255,255,0.10);">
+                <div>
+                  <p class="text-white text-[10px] lg:text-xs font-bold">Server decapsulates</p>
+                  <p class="text-blue-200 text-[9px] lg:text-[10px] mt-0.5 leading-snug">Unwraps everything → Applies "Jump"</p>
+                </div>
+                <i class="fa-solid fa-server text-gray-200 text-xs opacity-80 hidden lg:block"></i>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="w-4/12 flex flex-col gap-4 lg:gap-6 animate-fade-up delay-300 overflow-y-auto pr-2 custom-scrollbar">
+        
+        <div class="rounded-3xl p-4 lg:p-5 flex-1 flex flex-col" style="background:#111b33;border:1px solid rgba(255,255,255,0.10);">
+          <div class="flex items-center space-x-2 mb-3">
+            <i class="fa-solid fa-layer-group text-blue-300 text-[10px] lg:text-xs"></i>
+            <p class="text-white text-[10px] lg:text-xs font-bold">OSI layers used</p>
+          </div>
+          <div class="flex-1 flex flex-col justify-center gap-1 lg:gap-2">
+            <div class="rounded-xl p-2 flex items-center justify-between anim-s1" style="background:#0f1830;border:1px solid rgba(255,255,255,0.10);">
+              <p class="text-white text-[9px] lg:text-[10px] font-semibold">L7 App</p>
+              <i class="fa-solid fa-gamepad text-yellow-300 text-[10px]"></i>
+            </div>
+            
+            <div class="flex items-center justify-center py-0.5 opacity-60">
+              <p class="text-blue-200 text-[8px] italic">L5 & L6 usually skipped for speed</p>
+            </div>
+
+            <div class="rounded-xl p-2 flex items-center justify-between anim-s2" style="background:#0f1830;border:1px solid rgba(255,255,255,0.10);">
+              <p class="text-white text-[9px] lg:text-[10px] font-semibold">L4 Trans</p>
+              <i class="fa-solid fa-truck-fast text-orange-300 text-[10px]"></i>
+            </div>
+            <div class="rounded-xl p-2 flex items-center justify-between anim-s3" style="background:#0f1830;border:1px solid rgba(255,255,255,0.10);">
+              <p class="text-white text-[9px] lg:text-[10px] font-semibold">L3 Net</p>
+              <i class="fa-solid fa-route text-purple-200 text-[10px]"></i>
+            </div>
+            <div class="rounded-xl p-2 flex items-center justify-between anim-s4" style="background:#0f1830;border:1px solid rgba(255,255,255,0.10);">
+              <p class="text-white text-[9px] lg:text-[10px] font-semibold">L2 Link</p>
+              <i class="fa-solid fa-network-wired text-blue-300 text-[10px]"></i>
+            </div>
+            <div class="rounded-xl p-2 flex items-center justify-between anim-s5" style="background:#0f1830;border:1px solid rgba(255,255,255,0.10);">
+              <p class="text-white text-[9px] lg:text-[10px] font-semibold">L1 Phys</p>
+              <i class="fa-solid fa-wave-square text-green-300 text-[10px]"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-3xl p-4 lg:p-5 flex flex-col" style="background:#0f1830;border:1px solid rgba(255,255,255,0.12);">
+          <div class="flex items-center space-x-2 mb-3">
+            <i class="fa-solid fa-microchip text-orange-300 text-[10px] lg:text-xs"></i>
+            <p class="text-white text-[10px] lg:text-xs font-bold">Hardware involved</p>
+          </div>
+          <div class="grid grid-cols-1 gap-2">
+            <div class="rounded-xl p-2 hover:-translate-y-1 transition-transform" style="background:#111b33;border:1px solid rgba(255,255,255,0.10);">
+              <div class="flex items-center space-x-2">
+                <i class="fa-solid fa-wifi text-blue-300 text-[10px]"></i>
+                <p class="text-white text-[9px] lg:text-[10px] font-semibold">Access Point</p>
+              </div>
+            </div>
+            <div class="rounded-xl p-2 hover:-translate-y-1 transition-transform" style="background:#111b33;border:1px solid rgba(255,255,255,0.10);">
+              <div class="flex items-center space-x-2">
+                <i class="fa-solid fa-router text-orange-300 text-[10px]"></i>
+                <p class="text-white text-[9px] lg:text-[10px] font-semibold">Home Router</p>
+              </div>
+            </div>
+            <div class="rounded-xl p-2 hover:-translate-y-1 transition-transform" style="background:#111b33;border:1px solid rgba(255,255,255,0.10);">
+              <div class="flex items-center space-x-2">
+                <i class="fa-solid fa-server text-green-300 text-[10px]"></i>
+                <p class="text-white text-[9px] lg:text-[10px] font-semibold">Game Server</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-2xl p-4 flex items-start space-x-3" style="background:#111b33;border:1px solid rgba(255,255,255,0.10);">
+          <div class="w-8 h-8 rounded-xl flex items-center justify-center shrink-0" style="background:#0f1830;border:1px solid rgba(255,255,255,0.10);">
+            <i class="fa-solid fa-check-double text-green-300 text-[10px]"></i>
+          </div>
+          <div class="flex-1">
+            <p class="text-white text-[10px] lg:text-xs font-semibold">Key takeaway</p>
+            <p class="text-blue-200 text-[9px] lg:text-[10px] leading-relaxed mt-0.5">Even a tiny "Jump" becomes a carefully labeled package to travel the world.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="flex-shrink-0 flex items-center justify-between mt-auto animate-fade-up delay-300 w-full pb-2 pt-2">
+      <div class="flex items-center space-x-3">
+        <div class="w-2 h-2 rounded-full animate-pulse" style="background:#34D399;"></div>
+        <p class="text-blue-200 text-[10px] lg:text-xs">Next: We’ll watch it for real in Wireshark</p>
+      </div>
+      <div class="flex items-center space-x-3 hidden sm:flex">
+        <p class="text-blue-200 text-[10px] lg:text-xs">Section 3 progress</p>
+        <div class="w-16 h-1 rounded-full overflow-hidden" style="background:#1f2a44;">
+          <div class="h-full rounded-full" style="background:#60A5FA; width: 66%;"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <style>
+    .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+    .custom-scrollbar:hover::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); }
+  </style>
+
+  <script>
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'ArrowRight') {
+        window.location.href = 'slide13.html';
+      } else if (event.key === 'ArrowLeft') {
+        window.location.href = 'slide11.html';
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+  <style>
+    * { box-sizing: border-box; }
+    /* Let the browser handle the height natively */
+    body { margin: 0; background:#0b1220; font-family: Inter, system-ui, -apple-system, sans-serif; overflow: hidden; }
+    .slide { width: 100vw; height: 100vh; position: relative; overflow: hidden; display: flex; justify-content: center; background: #0b1220; }
+    
+    /* --- General Slide Animations --- */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-up { animation: fadeUp 0.6s ease-out forwards; opacity: 0; }
+    .delay-100 { animation-delay: 100ms; }
+    .delay-200 { animation-delay: 200ms; }
+    .delay-300 { animation-delay: 300ms; }
+
+    /* --- Pane Highlight Sequence Animation --- */
+    @keyframes paneGlow {
+      0%, 25% { 
+        box-shadow: 0 0 20px var(--glow-color), inset 0 0 10px var(--glow-color); 
+        border-color: var(--border-glow); 
+        transform: scale(1.01); 
+        z-index: 20; 
+      }
+      30%, 100% { 
+        box-shadow: none; 
+        border-color: var(--border-base); 
+        transform: scale(1); 
+        z-index: 10; 
+      }
+    }
+    
+    /* Total cycle is 9 seconds (3 seconds per pane highlight) */
+    .anim-pane-1 { 
+      --glow-color: rgba(96, 165, 250, 0.4); 
+      --border-glow: rgba(96, 165, 250, 1); 
+      --border-base: rgba(96, 165, 250, 0.3); 
+      animation: paneGlow 9s infinite 0s ease-in-out; 
+      border: 1px solid var(--border-base);
+    }
+    .anim-pane-2 { 
+      --glow-color: rgba(52, 211, 153, 0.4); 
+      --border-glow: rgba(52, 211, 153, 1); 
+      --border-base: rgba(52, 211, 153, 0.3); 
+      animation: paneGlow 9s infinite 3s ease-in-out; 
+      border: 1px solid var(--border-base);
+    }
+    .anim-pane-3 { 
+      --glow-color: rgba(245, 158, 11, 0.4); 
+      --border-glow: rgba(245, 158, 11, 1); 
+      --border-base: rgba(245, 158, 11, 0.3); 
+      animation: paneGlow 9s infinite 6s ease-in-out; 
+      border: 1px solid var(--border-base);
+    }
+  </style>
+</head>
+<body class="w-full h-screen overflow-hidden flex flex-col bg-[#0b1220] relative">
+
+  <div class="absolute inset-0 pointer-events-none z-0">
+    <svg aria-hidden="true" class="w-full h-full" preserveAspectRatio="xMidYMid slice" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="165" cy="120" fill="#60A5FA" opacity="0.12" r="92"></circle>
+      <circle cx="1160" cy="150" fill="#F59E0B" opacity="0.09" r="78"></circle>
+      <circle cx="1145" cy="615" fill="#34D399" opacity="0.10" r="135"></circle>
+      <circle cx="235" cy="650" fill="#A78BFA" opacity="0.10" r="60"></circle>
+      <circle cx="640" cy="70" fill="#60A5FA" opacity="0.55" r="2.4" class="animate-pulse"></circle>
+      <circle cx="680" cy="95" fill="#34D399" opacity="0.55" r="2.0"></circle>
+      <circle cx="720" cy="77" fill="#F59E0B" opacity="0.55" r="2.4" class="animate-pulse" style="animation-delay: 0.5s;"></circle>
+      <circle cx="760" cy="103" fill="#A78BFA" opacity="0.50" r="2.2"></circle>
+      <path d="M90 520 C260 450, 420 470, 610 400" fill="none" opacity="0.08" stroke="#60A5FA" stroke-width="2"></path>
+      <path d="M680 540 C850 460, 980 490, 1210 380" fill="none" opacity="0.08" stroke="#34D399" stroke-width="2"></path>
+      <path d="M120 250 C310 210, 450 250, 650 190" fill="none" opacity="0.07" stroke="#F59E0B" stroke-width="2"></path>
+    </svg>
+  </div>
+
+  <div class="relative z-10 flex flex-col w-full h-full max-w-[1536px] mx-auto px-6 lg:px-12 pt-6 lg:pt-8 pb-4">
+    
+    <div class="flex-shrink-0 flex items-start justify-between animate-fade-up">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 lg:w-12 lg:h-12 rounded-xl flex items-center justify-center transition-transform hover:scale-110 cursor-pointer" style="background:#111b33;">
+          <i class="fa-solid fa-table-columns text-yellow-300 text-lg lg:text-xl"></i>
+        </div>
+        <div class="flex flex-col leading-tight">
+          <p class="text-white font-extrabold tracking-tight text-xl lg:text-2xl">Understanding the Wireshark Screen: Three Panes</p>
+          <p class="text-blue-200 text-xs lg:text-sm mt-1">Think of Wireshark as a “package scanner”: list → details → raw bytes</p>
+        </div>
+      </div>
+      <div class="flex items-center space-x-3 hidden sm:flex">
+        <div class="px-4 py-2 rounded-full flex items-center space-x-2" style="background:#0f1830;border:1px solid rgba(255,255,255,0.10);">
+          <i class="fa-solid fa-eye text-green-300"></i>
+          <p class="text-blue-100 text-xs font-semibold">Where the layers show up</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex-1 flex flex-row gap-4 lg:gap-6 mt-4 lg:mt-6 min-h-0 overflow-hidden">
+      
+      <div class="w-4/12 flex flex-col gap-4 lg:gap-6 animate-fade-up delay-100 overflow-y-auto pr-2 custom-scrollbar">
+        
+        <div class="rounded-3xl p-5 lg:p-6" style="background:#0f1830;border:1px solid rgba(255,255,255,0.12);">
+          <div class="flex items-center space-x-3 mb-4">
+            <div class="w-10 h-10 rounded-2xl flex items-center justify-center" style="background:#111b33;">
+              <i class="fa-solid fa-brain text-purple-200"></i>
+            </div>
+            <div>
+              <p class="text-white font-bold text-sm lg:text-base">Beginner mental model</p>
+              <p class="text-blue-200 text-[10px] lg:text-[11px] leading-snug mt-0.5">Top = “all packages” • Middle = “this package’s labels” • Bottom = “the ink on the label”</p>
+            </div>
+          </div>
+          <div class="space-y-3 lg:space-y-4">
+            <div class="flex items-start space-x-3 hover:bg-[#111b33] p-2 rounded-xl transition duration-300">
+              <div class="mt-0.5 w-7 h-7 rounded-xl flex items-center justify-center shrink-0" style="background:#111b33;">
+                <i class="fa-solid fa-list text-blue-300 text-[10px] lg:text-xs"></i>
+              </div>
+              <div>
+                <p class="text-white text-xs lg:text-sm font-semibold">You click a row in the top pane…</p>
+                <p class="text-blue-200 text-[10px] lg:text-[11px] leading-relaxed mt-0.5">…and the middle &amp; bottom panes update to show what’s inside that one packet.</p>
+              </div>
+            </div>
+            <div class="flex items-start space-x-3 hover:bg-[#111b33] p-2 rounded-xl transition duration-300">
+              <div class="mt-0.5 w-7 h-7 rounded-xl flex items-center justify-center shrink-0" style="background:#111b33;">
+                <i class="fa-solid fa-layer-group text-green-300 text-[10px] lg:text-xs"></i>
+              </div>
+              <div>
+                <p class="text-white text-xs lg:text-sm font-semibold">Middle pane is the “OSI view.”</p>
+                <p class="text-blue-200 text-[10px] lg:text-[11px] leading-relaxed mt-0.5">You can expand Ethernet → IP → TCP/UDP → App.</p>
+              </div>
+            </div>
+            <div class="flex items-start space-x-3 hover:bg-[#111b33] p-2 rounded-xl transition duration-300">
+              <div class="mt-0.5 w-7 h-7 rounded-xl flex items-center justify-center shrink-0" style="background:#111b33;">
+                <i class="fa-solid fa-code text-yellow-300 text-[10px] lg:text-xs"></i>
+              </div>
+              <div>
+                <p class="text-white text-xs lg:text-sm font-semibold">Bottom pane is raw data.</p>
+                <p class="text-blue-200 text-[10px] lg:text-[11px] leading-relaxed mt-0.5">Looks scary—beginners mostly use it to confirm “this field matches these bytes.”</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-3xl p-5 lg:p-6 flex-1" style="background:#111b33;border:1px solid rgba(255,255,255,0.10);">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center space-x-3">
+              <div class="w-10 h-10 rounded-2xl flex items-center justify-center" style="background:#0f1830;border:1px solid rgba(255,255,255,0.10);">
+                <i class="fa-solid fa-hand-pointer text-blue-300"></i>
+              </div>
+              <div>
+                <p class="text-white font-bold text-xs lg:text-sm">Do this (simple practice)</p>
+                <p class="text-blue-200 text-[10px] lg:text-xs">No technical knowledge required</p>
+              </div>
+            </div>
+            <div class="px-3 py-1.5 rounded-full hidden xl:block" style="background:#0f1830;border:1px solid rgba(255,255,255,0.10);">
+              <p class="text-blue-100 text-[10px] font-semibold">3 clicks</p>
+            </div>
+          </div>
+          
+          <div class="space-y-3">
+            <div class="flex items-start space-x-3">
+              <div class="w-8 h-8 rounded-xl flex items-center justify-center shrink-0" style="background:#0f1830;border:1px solid rgba(255,255,255,0.10);">
+                <p class="text-white text-[10px] lg:text-xs font-extrabold">1</p>
+              </div>
+              <div>
+                <p class="text-white text-[11px] lg:text-sm font-semibold">Click a packet in the list (top)</p>
+                <p class="text-blue-200 text-[10px] lg:text-[11px] leading-relaxed mt-0.5">Start with something obvious like DNS or HTTP.</p>
+              </div>
+            </div>
+            <div class="flex items-start space-x-3">
+              <div class="w-8 h-8 rounded-xl flex items-center justify-center shrink-0" style="background:#0f1830;border:1px solid rgba(255,255,255,0.10);">
+                <p class="text-white text-[10px] lg:text-xs font-extrabold">2</p>
+              </div>
+              <div>
+                <p class="text-white text-[11px] lg:text-sm font-semibold">Expand layers in Details (middle)</p>
+                <p class="text-blue-200 text-[10px] lg:text-[11px] leading-relaxed mt-0.5">You’re literally “unwrapping” encapsulation, layer by layer.</p>
+              </div>
+            </div>
+            <div class="flex items-start space-x-3">
+              <div class="w-8 h-8 rounded-xl flex items-center justify-center shrink-0" style="background:#0f1830;border:1px solid rgba(255,255,255,0.10);">
+                <p class="text-white text-[10px] lg:text-xs font-extrabold">3</p>
+              </div>
+              <div>
+                <p class="text-white text-[11px] lg:text-sm font-semibold">Watch bytes highlight (bottom)</p>
+                <p class="text-blue-200 text-[10px] lg:text-[11px] leading-relaxed mt-0.5">Wireshark highlights the exact bytes used by your selection.</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mt-4 rounded-2xl p-3 flex items-start space-x-3" style="background:#0b1220;border:1px dashed rgba(255,255,255,0.16);">
+            <div class="w-8 h-8 rounded-xl flex items-center justify-center shrink-0" style="background:#111b33;">
+              <i class="fa-solid fa-lightbulb text-yellow-300 text-[10px]"></i>
+            </div>
+            <div class="flex-1">
+              <p class="text-white text-xs lg:text-sm font-semibold">Beginner tip</p>
+              <p class="text-blue-200 text-[9px] lg:text-[10px] leading-relaxed mt-0.5">For learning layers, the <span class="text-blue-100 font-semibold">middle pane</span> is the most important.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="w-8/12 flex flex-col gap-4 lg:gap-6 animate-fade-up delay-200 overflow-y-auto pr-2 custom-scrollbar">
+        
+        <div class="rounded-3xl p-4 lg:p-6 flex flex-col h-full" style="background:#0f1830;border:1px solid rgba(255,255,255,0.12);">
+          
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center space-x-3">
+              <div class="w-10 h-10 rounded-2xl flex items-center justify-center" style="background:#111b33;">
+                <i class="fa-solid fa-desktop text-green-300"></i>
+              </div>
+              <div>
+                <p class="text-white font-bold text-xs lg:text-sm">A simplified Wireshark screen</p>
+                <p class="text-blue-200 text-[10px] lg:text-xs">Follow the glowing borders to see how the panes connect</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="flex-1 rounded-2xl lg:rounded-3xl p-4 lg:p-5 flex flex-col gap-3 lg:gap-4" style="background:#111b33;border:1px solid rgba(255,255,255,0.10);">
+            
+            <div class="flex flex-col gap-3 shrink-0">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                  <div class="w-8 h-8 rounded-xl flex items-center justify-center" style="background:#0f1830;border:1px solid rgba(255,255,255,0.10);">
+                    <i class="fa-solid fa-shark text-blue-300 text-[10px]"></i>
+                  </div>
+                  <div>
+                    <p class="text-white text-[11px] lg:text-xs font-extrabold">Wireshark</p>
+                  </div>
+                </div>
+                <div class="flex items-center space-x-2">
+                  <div class="w-2.5 h-2.5 rounded-full" style="background:#F59E0B;opacity:0.85;"></div>
+                  <div class="w-2.5 h-2.5 rounded-full" style="background:#34D399;opacity:0.85;"></div>
+                  <div class="w-2.5 h-2.5 rounded-full" style="background:#60A5FA;opacity:0.85;"></div>
+                </div>
+              </div>
+              
+              <div class="rounded-xl px-3 py-2 flex items-center justify-between" style="background:#0f1830;border:1px solid rgba(255,255,255,0.10);">
+                <div class="flex items-center space-x-2">
+                  <i class="fa-solid fa-filter text-green-300 text-[10px]"></i>
+                  <p class="text-white text-[10px] lg:text-xs font-bold">Display filter: <span class="text-blue-200 font-normal ml-1">tls</span></p>
+                </div>
+              </div>
+            </div>
+            
+            <div class="rounded-xl lg:rounded-2xl p-3 relative anim-pane-1 bg-[#0b1220] flex-1 min-h-0 flex flex-col">
+              <div class="absolute -top-3 left-4 px-3 py-0.5 rounded-full flex items-center space-x-2 z-30" style="background:#111b33;border:1px solid rgba(255,255,255,0.10);">
+                <i class="fa-solid fa-rectangle-list text-blue-300 text-[9px]"></i>
+                <p class="text-blue-100 text-[9px] lg:text-[10px] font-extrabold">1) Packet List</p>
+              </div>
+              
+              <div class="rounded-lg px-2 py-1.5 flex items-center justify-between mb-2 shrink-0" style="background:#111b33;border:1px solid rgba(255,255,255,0.10);">
+                <p class="text-blue-200 text-[8px] lg:text-[10px] font-semibold w-full grid grid-cols-12 gap-2">
+                  <span class="col-span-1">No.</span>
+                  <span class="col-span-2">Time</span>
+                  <span class="col-span-3">Source</span>
+                  <span class="col-span-3">Destination</span>
+                  <span class="col-span-1">Proto</span>
+                  <span class="col-span-2">Info</span>
+                </p>
+              </div>
+              
+              <div class="flex-1 overflow-y-auto custom-scrollbar space-y-1.5 pr-1">
+                <div class="rounded-lg px-2 py-1.5 flex items-center w-full grid grid-cols-12 gap-2" style="background:#0f1830;border:1px solid rgba(255,255,255,0.05);">
+                  <span class="text-white text-[8px] lg:text-[10px] col-span-1 opacity-70">25</span>
+                  <span class="text-white text-[8px] lg:text-[10px] col-span-2 opacity-70">3.021</span>
+                  <span class="text-white text-[8px] lg:text-[10px] col-span-3 opacity-70">192.168.1.50</span>
+                  <span class="text-white text-[8px] lg:text-[10px] col-span-3 opacity-70">1.1.1.1</span>
+                  <span class="text-white text-[8px] lg:text-[10px] col-span-1 opacity-70">DNS</span>
+                  <span class="text-white text-[8px] lg:text-[10px] col-span-2 opacity-70 truncate">Std query A...</span>
+                </div>
+                <div class="rounded-lg px-2 py-1.5 flex items-center w-full grid grid-cols-12 gap-2 relative overflow-hidden" style="background:#1e3a8a;border:1px solid #60A5FA;">
+                  <span class="text-white text-[8px] lg:text-[10px] col-span-1 font-bold">27</span>
+                  <span class="text-white text-[8px] lg:text-[10px] col-span-2 font-bold">3.120</span>
+                  <span class="text-white text-[8px] lg:text-[10px] col-span-3 font-bold">192.168.1.50</span>
+                  <span class="text-white text-[8px] lg:text-[10px] col-span-3 font-bold">93.184.216.34</span>
+                  <span class="text-white text-[8px] lg:text-[10px] col-span-1 font-bold">TLS</span>
+                  <span class="text-white text-[8px] lg:text-[10px] col-span-2 font-bold truncate">Client Hello</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="rounded-xl lg:rounded-2xl p-3 relative anim-pane-2 bg-[#0b1220] flex-1 min-h-0 flex gap-3">
+              <div class="absolute -top-3 left-4 px-3 py-0.5 rounded-full flex items-center space-x-2 z-30" style="background:#111b33;border:1px solid rgba(255,255,255,0.10);">
+                <i class="fa-solid fa-layer-group text-green-300 text-[9px]"></i>
+                <p class="text-blue-100 text-[9px] lg:text-[10px] font-extrabold">2) Packet Details</p>
+              </div>
+              
+              <div class="w-7/12 flex flex-col gap-1.5 overflow-y-auto custom-scrollbar pr-1 pt-1">
+                <div class="rounded-lg px-2 py-1.5 flex items-center space-x-2 cursor-pointer hover:bg-[#111b33]" style="border:1px solid transparent;">
+                  <i class="fa-solid fa-caret-right text-gray-400 text-[10px]"></i>
+                  <p class="text-white text-[9px] lg:text-[11px] font-semibold">Frame 27: 1514 bytes on wire</p>
+                </div>
+                <div class="rounded-lg px-2 py-1.5 flex items-center space-x-2 cursor-pointer hover:bg-[#111b33]" style="border:1px solid transparent;">
+                  <i class="fa-solid fa-caret-right text-gray-400 text-[10px]"></i>
+                  <p class="text-white text-[9px] lg:text-[11px] font-semibold">Ethernet II, Src: AA:AA:..., Dst: BB:BB:...</p>
+                </div>
+                <div class="rounded-lg px-2 py-1.5 flex items-center space-x-2 cursor-pointer" style="background:#064e3b; border:1px solid #34D399;">
+                  <i class="fa-solid fa-caret-down text-green-300 text-[10px]"></i>
+                  <p class="text-white text-[9px] lg:text-[11px] font-bold">Internet Protocol Version 4, Src: 192.168.1.50</p>
+                </div>
+                <div class="rounded-lg px-2 py-1.5 flex items-center space-x-2 cursor-pointer hover:bg-[#111b33]" style="border:1px solid transparent;">
+                  <i class="fa-solid fa-caret-right text-gray-400 text-[10px]"></i>
+                  <p class="text-white text-[9px] lg:text-[11px] font-semibold">Transmission Control Protocol, Src Port: 54321</p>
+                </div>
+                <div class="rounded-lg px-2 py-1.5 flex items-center space-x-2 cursor-pointer hover:bg-[#111b33]" style="border:1px solid transparent;">
+                  <i class="fa-solid fa-caret-right text-gray-400 text-[10px]"></i>
+                  <p class="text-white text-[9px] lg:text-[11px] font-semibold">Transport Layer Security (TLS)</p>
+                </div>
+              </div>
+              
+              <div class="w-5/12 rounded-xl p-3 flex flex-col justify-center" style="background:#0f1830;border:1px solid rgba(255,255,255,0.05);">
+                <div class="flex items-center space-x-2 mb-2">
+                  <i class="fa-solid fa-map text-yellow-300 text-[10px]"></i>
+                  <p class="text-white text-[10px] lg:text-xs font-bold">Why it matters</p>
+                </div>
+                <p class="text-blue-200 text-[8px] lg:text-[10px] leading-snug">This is encapsulation in real life. Most troubleshooting starts here to verify IPs and ports.</p>
+              </div>
+            </div>
+
+            <div class="rounded-xl lg:rounded-2xl p-3 relative anim-pane-3 bg-[#0b1220] shrink-0 flex gap-3">
+              <div class="absolute -top-3 left-4 px-3 py-0.5 rounded-full flex items-center space-x-2 z-30" style="background:#111b33;border:1px solid rgba(255,255,255,0.10);">
+                <i class="fa-solid fa-code text-yellow-300 text-[9px]"></i>
+                <p class="text-blue-100 text-[9px] lg:text-[10px] font-extrabold">3) Packet Bytes</p>
+              </div>
+              
+              <div class="w-7/12 rounded-xl p-2.5 pt-4 font-mono text-[8px] lg:text-[10px] leading-tight text-blue-200" style="background:#111b33;border:1px dashed rgba(255,255,255,0.18);">
+                <p>0000  bb bb bb bb bb bb aa aa aa aa aa aa 08 00 <span class="bg-[#92400e] text-white px-0.5">45 00</span></p>
+                <p>0010  <span class="bg-[#92400e] text-white px-0.5">00 3c 1c 46 40 00 40 06 b1 e6 c0 a8 01 32 5d b8</span></p>
+                <p>0020  <span class="bg-[#92400e] text-white px-0.5">d8 22</span> d4 31 01 bb ...</p>
+              </div>
+              
+              <div class="w-5/12 rounded-xl p-2.5 pt-3" style="background:#0f1830;border:1px solid rgba(255,255,255,0.05);">
+                <div class="flex items-center space-x-2 mb-1.5">
+                  <i class="fa-solid fa-circle-question text-purple-200 text-[10px]"></i>
+                  <p class="text-white text-[9px] lg:text-[11px] font-bold">Hex view</p>
+                </div>
+                <p class="text-blue-200 text-[8px] lg:text-[9px] leading-snug">The raw "ink on the label." Wireshark auto-highlights the bytes matching the layer you click above.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="rounded-2xl lg:rounded-3xl p-4 lg:p-5 flex items-center justify-between" style="background:#111b33;border:1px solid rgba(255,255,255,0.10);">
+          <div class="flex items-start space-x-3">
+            <div class="w-8 h-8 rounded-xl flex items-center justify-center shrink-0" style="background:#0f1830;border:1px solid rgba(255,255,255,0.10);">
+              <i class="fa-solid fa-arrow-pointer text-green-300 text-xs"></i>
+            </div>
+            <div>
+              <p class="text-white text-xs lg:text-sm font-bold">Workflow to remember</p>
+              <p class="text-blue-200 text-[10px] lg:text-[11px] leading-relaxed mt-0.5">
+                Pick a packet (Top) → expand layers (Middle) → see raw data highlight (Bottom).
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="flex-shrink-0 flex items-center justify-between mt-auto animate-fade-up delay-300 w-full pb-2 pt-2">
+      <div class="flex items-center space-x-3">
+        <div class="w-2 h-2 rounded-full animate-pulse" style="background:#34D399;"></div>
+        <p class="text-blue-200 text-[10px] lg:text-xs">Next: capture an HTTP/TLS request</p>
+      </div>
+      <div class="flex items-center space-x-3 hidden sm:flex">
+        <p class="text-blue-200 text-[10px] lg:text-xs">Section 4 progress</p>
+        <div class="w-16 h-1 rounded-full overflow-hidden" style="background:#1f2a44;">
+          <div class="h-full rounded-full" style="background:#60A5FA; width: 50%;"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <style>
+    .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+    .custom-scrollbar:hover::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); }
+  </style>
+
+  <script>
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'ArrowRight') {
+        window.location.href = 'slide15.html';
+      } else if (event.key === 'ArrowLeft') {
+        window.location.href = 'slide13.html';
+      }
+    });
+  </script>
+</body>
+</html>

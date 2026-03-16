@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+  <style>
+    * { box-sizing: border-box; }
+    /* Let the browser handle the height natively */
+    body { margin: 0; background:#0b1220; font-family: Inter, system-ui, -apple-system, sans-serif; overflow: hidden; }
+    .slide { width: 100vw; height: 100vh; position: relative; overflow: hidden; display: flex; justify-content: center; background: #0b1220; }
+    
+    /* --- General Slide Animations --- */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-up { animation: fadeUp 0.6s ease-out forwards; opacity: 0; }
+    .delay-100 { animation-delay: 100ms; }
+    .delay-200 { animation-delay: 200ms; }
+    .delay-300 { animation-delay: 300ms; }
+
+    /* --- Wireshark Animation specific classes --- */
+    @keyframes packetMove {
+      0% { transform: translateX(0); opacity: 0; }
+      15%, 85% { opacity: 1; }
+      100% { transform: translateX(180px); opacity: 0; }
+    }
+    .anim-packet { animation: packetMove 6s infinite linear; }
+    
+    @keyframes scanGlass {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(-40px); }
+    }
+    .anim-glass { animation: scanGlass 4s infinite ease-in-out; }
+    
+    @keyframes revealLayer {
+      0%, 45% { opacity: 0.3; filter: blur(2px); }
+      50%, 95% { opacity: 1; filter: blur(0px); }
+      100% { opacity: 0.3; filter: blur(2px); }
+    }
+    .anim-reveal-1 { animation: revealLayer 4s infinite 0s ease-in-out; }
+    .anim-reveal-2 { animation: revealLayer 4s infinite 0.3s ease-in-out; }
+    .anim-reveal-3 { animation: revealLayer 4s infinite 0.6s ease-in-out; }
+  </style>
+</head>
+<body class="w-full h-screen overflow-hidden flex flex-col bg-[#0b1220] relative">
+
+  <div class="absolute inset-0 pointer-events-none z-0">
+    <svg aria-hidden="true" class="w-full h-full" preserveAspectRatio="xMidYMid slice" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="170" cy="125" fill="#60A5FA" opacity="0.12" r="92"></circle>
+      <circle cx="1160" cy="150" fill="#F59E0B" opacity="0.09" r="78"></circle>
+      <circle cx="1145" cy="615" fill="#34D399" opacity="0.10" r="135"></circle>
+      <circle cx="235" cy="650" fill="#A78BFA" opacity="0.10" r="60"></circle>
+      
+      <circle cx="640" cy="70" fill="#60A5FA" opacity="0.55" r="2.4" class="animate-pulse"></circle>
+      <circle cx="680" cy="95" fill="#34D399" opacity="0.55" r="2.0"></circle>
+      <circle cx="720" cy="77" fill="#F59E0B" opacity="0.55" r="2.4" class="animate-pulse" style="animation-delay: 0.5s;"></circle>
+      <circle cx="760" cy="103" fill="#A78BFA" opacity="0.50" r="2.2"></circle>
+      
+      <path d="M90 520 C260 450, 420 470, 610 400" fill="none" opacity="0.08" stroke="#60A5FA" stroke-width="2"></path>
+      <path d="M680 540 C850 460, 980 490, 1210 380" fill="none" opacity="0.08" stroke="#34D399" stroke-width="2"></path>
+      <path d="M120 250 C310 210, 450 250, 650 190" fill="none" opacity="0.07" stroke="#F59E0B" stroke-width="2"></path>
+    </svg>
+  </div>
+
+  <div class="relative z-10 flex flex-col w-full h-full max-w-[1536px] mx-auto px-6 lg:px-12 pt-6 lg:pt-8 pb-4">
+    
+    <div class="flex-shrink-0 flex items-start justify-between animate-fade-up">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 lg:w-12 lg:h-12 rounded-xl flex items-center justify-center transition-transform hover:scale-110 cursor-pointer" style="background:#111b33;">
+          <i class="fa-solid fa-shark text-blue-300 text-lg lg:text-xl"></i>
+        </div>
+        <div class="flex flex-col leading-tight">
+          <p class="text-white font-extrabold tracking-tight text-xl lg:text-2xl">Wireshark: The X‑Ray Machine for Networks</p>
+          <p class="text-blue-200 text-xs lg:text-sm mt-1">A free tool that lets you <span class="text-blue-100 font-semibold">see real packets</span> moving through your network</p>
+        </div>
+      </div>
+      <div class="flex items-center space-x-3 hidden sm:flex">
+        <div class="px-4 py-2 rounded-full flex items-center space-x-2" style="background:#0f1830;border:1px solid rgba(255,255,255,0.10);">
+          <i class="fa-solid fa-eye text-green-300"></i>
+          <p class="text-blue-100 text-xs font-semibold">Section 4: Wireshark Demo</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex-1 flex flex-row gap-4 lg:gap-6 mt-4 lg:mt-6 min-h-0 overflow-hidden">
+      
+      <div class="w-5/12 flex flex-col gap-4 lg:gap-6 animate-fade-up delay-100 overflow-y-auto pr-2 custom-scrollbar">
+        
+        <div class="rounded-3xl p-4 lg:p-6" style="background:#0f1830;border:1px solid rgba(255,255,255,0.12);">
+          <div class="flex items-center space-x-3 mb-4">
+            <div class="w-10 h-10 rounded-2xl flex items-center justify-center" style="background:#111b33;">
+              <i class="fa-solid fa-magnifying-glass text-yellow-300"></i>
+            </div>
+            <div>
+              <p class="text-white font-bold text-sm lg:text-base">Plain-English definition</p>
+              <p class="text-blue-200 text-[10px] lg:text-xs">Wireshark takes snapshots of network “envelopes.”</p>
+            </div>
+          </div>
+          <div class="space-y-3">
+            <div class="flex items-start space-x-3 hover:bg-[#111b33] p-2 rounded-xl transition duration-300">
+              <div class="mt-0.5 w-7 h-7 rounded-xl flex items-center justify-center shrink-0" style="background:#111b33;">
+                <i class="fa-solid fa-envelope-open-text text-blue-300 text-[10px]"></i>
+              </div>
+              <div>
+                <p class="text-white text-xs lg:text-sm font-semibold">It captures <span class="text-blue-100 font-semibold">packets</span>.</p>
+                <p class="text-blue-200 text-[10px] lg:text-[11px] leading-relaxed mt-0.5">Each packet contains headers (labels) like MAC, IP, and TCP/UDP.</p>
+              </div>
+            </div>
+            <div class="flex items-start space-x-3 hover:bg-[#111b33] p-2 rounded-xl transition duration-300">
+              <div class="mt-0.5 w-7 h-7 rounded-xl flex items-center justify-center shrink-0" style="background:#111b33;">
+                <i class="fa-solid fa-layer-group text-green-300 text-[10px]"></i>
+              </div>
+              <div>
+                <p class="text-white text-xs lg:text-sm font-semibold">It shows layers like a “peelable onion.”</p>
+                <p class="text-blue-200 text-[10px] lg:text-[11px] leading-relaxed mt-0.5">You can expand a packet to see: <span class="text-blue-100 font-semibold">Ethernet → IP → TCP/UDP</span>.</p>
+              </div>
+            </div>
+            <div class="flex items-start space-x-3 hover:bg-[#111b33] p-2 rounded-xl transition duration-300">
+              <div class="mt-0.5 w-7 h-7 rounded-xl flex items-center justify-center shrink-0" style="background:#111b33;">
+                <i class="fa-solid fa-clock text-orange-300 text-[10px]"></i>
+              </div>
+              <div>
+                <p class="text-white text-xs lg:text-sm font-semibold">It shows timing and performance clues.</p>
+                <p class="text-blue-200 text-[10px] lg:text-[11px] leading-relaxed mt-0.5">Example: “How long did that request take?” or “Are packets lost?”</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-3xl p-4 lg:p-6" style="background:#111b33;border:1px solid rgba(255,255,255,0.10);">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center space-x-3">
+              <div class="w-8 h-8 rounded-2xl flex items-center justify-center" style="background:#0f1830;border:1px solid rgba(255,255,255,0.10);">
+                <i class="fa-solid fa-list-check text-purple-200 text-[10px]"></i>
+              </div>
+              <div>
+                <p class="text-white font-bold text-xs lg:text-sm">What beginners can “read”</p>
+                <p class="text-blue-200 text-[9px] lg:text-[10px]">Without knowing coding or math</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="grid grid-cols-2 gap-2 lg:gap-3">
+            <div class="rounded-xl p-3 hover:-translate-y-1 transition-transform" style="background:#0f1830;border:1px solid rgba(255,255,255,0.10);">
+              <div class="flex items-center space-x-2">
+                <i class="fa-solid fa-people-arrows text-green-300 text-[10px]"></i>
+                <p class="text-white text-[10px] lg:text-xs font-semibold">Who talks to who</p>
+              </div>
+              <p class="text-blue-200 text-[9px] mt-1.5 leading-snug">IP addresses + ports.</p>
+            </div>
+            <div class="rounded-xl p-3 hover:-translate-y-1 transition-transform" style="background:#0f1830;border:1px solid rgba(255,255,255,0.10);">
+              <div class="flex items-center space-x-2">
+                <i class="fa-solid fa-tag text-blue-300 text-[10px]"></i>
+                <p class="text-white text-[10px] lg:text-xs font-semibold">Which protocol</p>
+              </div>
+              <p class="text-blue-200 text-[9px] mt-1.5 leading-snug">DNS, HTTP, TLS, TCP, UDP.</p>
+            </div>
+            <div class="rounded-xl p-3 hover:-translate-y-1 transition-transform" style="background:#0f1830;border:1px solid rgba(255,255,255,0.10);">
+              <div class="flex items-center space-x-2">
+                <i class="fa-solid fa-triangle-exclamation text-yellow-300 text-[10px]"></i>
+                <p class="text-white text-[10px] lg:text-xs font-semibold">Errors &amp; retries</p>
+              </div>
+              <p class="text-blue-200 text-[9px] mt-1.5 leading-snug">Drops, retransmissions, resets.</p>
+            </div>
+            <div class="rounded-xl p-3 hover:-translate-y-1 transition-transform" style="background:#0f1830;border:1px solid rgba(255,255,255,0.10);">
+              <div class="flex items-center space-x-2">
+                <i class="fa-solid fa-stopwatch text-orange-300 text-[10px]"></i>
+                <p class="text-white text-[10px] lg:text-xs font-semibold">Speed clues</p>
+              </div>
+              <p class="text-blue-200 text-[9px] mt-1.5 leading-snug">Delays, RTT, slow DNS.</p>
+            </div>
+          </div>
+          
+          <div class="mt-4 rounded-xl p-3 flex items-start space-x-2" style="background:#0b1220;border:1px dashed rgba(255,255,255,0.16);">
+            <i class="fa-solid fa-circle-info text-blue-300 text-[10px] mt-0.5"></i>
+            <div class="flex-1">
+              <p class="text-blue-200 text-[9px] lg:text-[10px] leading-relaxed">With <span class="text-blue-100 font-semibold">HTTPS</span>, Wireshark shows the “outside labels” (IP/TCP), but the web contents are encrypted.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-3xl p-4 lg:p-5 flex-1" style="background:#0f1830;border:1px solid rgba(255,255,255,0.12);">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center space-x-3">
+              <div class="w-8 h-8 rounded-2xl flex items-center justify-center" style="background:#111b33;">
+                <i class="fa-solid fa-shield-halved text-green-300 text-[10px]"></i>
+              </div>
+              <div>
+                <p class="text-white font-bold text-xs lg:text-sm">Ethics &amp; safety (non‑negotiable)</p>
+              </div>
+            </div>
+          </div>
+          <div class="space-y-2">
+            <div class="flex items-start space-x-2">
+              <i class="fa-solid fa-check text-green-300 mt-0.5 text-[10px]"></i>
+              <div>
+                <p class="text-white text-[10px] lg:text-[11px] font-semibold">Capture only on networks you <span class="text-blue-100 font-semibold">own</span> or have <span class="text-blue-100 font-semibold">permission</span> to analyze.</p>
+              </div>
+            </div>
+            <div class="flex items-start space-x-2">
+              <i class="fa-solid fa-ban text-red-300 mt-0.5 text-[10px]"></i>
+              <div>
+                <p class="text-white text-[10px] lg:text-[11px] font-semibold">Don’t capture other people’s private traffic.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="w-7/12 flex flex-col gap-4 lg:gap-6 animate-fade-up delay-200 overflow-y-auto pr-2 custom-scrollbar">
+        
+        <div class="rounded-3xl p-4 lg:p-6 flex flex-col" style="background:#0f1830;border:1px solid rgba(255,255,255,0.12);">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center space-x-3">
+              <div class="w-10 h-10 rounded-2xl flex items-center justify-center" style="background:#111b33;">
+                <i class="fa-solid fa-x-ray text-blue-300"></i>
+              </div>
+              <div>
+                <p class="text-white font-bold text-xs lg:text-sm">“Packet envelopes under a magnifier”</p>
+                <p class="text-blue-200 text-[10px] lg:text-xs">Capture → filter → inspect layers</p>
+              </div>
+            </div>
+            <div class="px-3 py-1.5 rounded-full hidden xl:block" style="background:#111b33;">
+              <p class="text-blue-200 text-[10px] lg:text-xs font-semibold">Beginner demo flow</p>
+            </div>
+          </div>
+          
+          <div class="flex-1 rounded-2xl flex items-center justify-center relative overflow-hidden" style="background:#111b33;border:1px solid rgba(255,255,255,0.10); min-height: 200px;">
+            <svg aria-hidden="true" height="100%" width="100%" viewBox="0 0 540 220" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+              
+              <rect fill="#111b33" height="80" rx="12" stroke="rgba(255,255,255,0.14)" width="100" x="30" y="70"></rect>
+              <rect fill="#0f1830" height="40" rx="6" stroke="rgba(255,255,255,0.12)" width="80" x="40" y="80"></rect>
+              <rect fill="rgba(255,255,255,0.12)" height="6" rx="3" width="70" x="45" y="130"></rect>
+              <text fill="#BFDBFE" font-family="Inter, Arial" font-size="10" font-weight="800" text-anchor="middle" x="80" y="60">Your device</text>
+              <circle cx="80" cy="140" fill="#60A5FA" opacity="0.9" r="4"></circle>
+              
+              <path d="M140 110 C180 110, 250 110, 480 110" fill="none" opacity="0.4" stroke="#60A5FA" stroke-width="2" stroke-dasharray="4 4"></path>
+
+              <g class="anim-packet" style="animation-delay: 0s;">
+                <rect fill="#0f1830" height="30" rx="6" stroke="#60A5FA" stroke-width="2" width="60" x="180" y="95"></rect>
+                <path d="M185 100 L210 115 L235 100" fill="none" stroke="rgba(96,165,250,0.85)" stroke-width="1.5"></path>
+                <text fill="#BFDBFE" font-family="Inter, Arial" font-size="8" font-weight="800" text-anchor="middle" x="210" y="112">Packet</text>
+              </g>
+              
+              <g class="anim-packet" style="animation-delay: 2s;">
+                <rect fill="#0f1830" height="30" rx="6" stroke="#34D399" stroke-width="2" width="60" x="180" y="95"></rect>
+                <path d="M185 100 L210 115 L235 100" fill="none" stroke="rgba(52,211,153,0.85)" stroke-width="1.5"></path>
+                <text fill="#A7F3D0" font-family="Inter, Arial" font-size="8" font-weight="800" text-anchor="middle" x="210" y="112">Packet</text>
+              </g>
+              
+              <g class="anim-packet" style="animation-delay: 4s;">
+                <rect fill="#0f1830" height="30" rx="6" stroke="#F59E0B" stroke-width="2" width="60" x="180" y="95"></rect>
+                <path d="M185 100 L210 115 L235 100" fill="none" stroke="rgba(245,158,11,0.85)" stroke-width="1.5"></path>
+                <text fill="#FDE68A" font-family="Inter, Arial" font-size="8" font-weight="800" text-anchor="middle" x="210" y="112">Packet</text>
+              </g>
+
+              <g class="anim-glass">
+                <circle cx="340" cy="110" fill="rgba(255,255,255,0.02)" r="45" stroke="#A78BFA" stroke-width="3"></circle>
+                <circle cx="340" cy="110" fill="rgba(167,139,250,0.10)" r="35" stroke="rgba(255,255,255,0.10)" stroke-width="1.5"></circle>
+                <rect fill="#A78BFA" height="12" opacity="0.85" rx="6" transform="rotate(35 370 145)" width="60" x="370" y="145"></rect>
+                
+                <rect fill="#111b33" height="14" rx="4" stroke="rgba(255,255,255,0.12)" width="50" x="315" y="85" class="anim-reveal-1"></rect>
+                <text fill="#BFDBFE" font-family="Inter, Arial" font-size="7" font-weight="800" text-anchor="middle" x="340" y="94" class="anim-reveal-1">Ethernet</text>
+                
+                <rect fill="#111b33" height="14" rx="4" stroke="rgba(255,255,255,0.12)" width="40" x="320" y="103" class="anim-reveal-2"></rect>
+                <text fill="#A7F3D0" font-family="Inter, Arial" font-size="7" font-weight="800" text-anchor="middle" x="340" y="112" class="anim-reveal-2">IP</text>
+                
+                <rect fill="#111b33" height="14" rx="4" stroke="rgba(255,255,255,0.12)" width="54" x="313" y="121" class="anim-reveal-3"></rect>
+                <text fill="#FDE68A" font-family="Inter, Arial" font-size="7" font-weight="800" text-anchor="middle" x="340" y="130" class="anim-reveal-3">TCP/UDP</text>
+              </g>
+
+              <rect fill="#111b33" height="80" rx="12" stroke="rgba(255,255,255,0.14)" width="50" x="460" y="70"></rect>
+              <rect fill="rgba(52,211,153,0.65)" height="6" rx="3" width="30" x="470" y="80"></rect>
+              <rect fill="rgba(96,165,250,0.55)" height="6" rx="3" width="30" x="470" y="95"></rect>
+              <rect fill="rgba(245,158,11,0.55)" height="6" rx="3" width="30" x="470" y="110"></rect>
+              <text fill="#BFDBFE" font-family="Inter, Arial" font-size="10" font-weight="800" text-anchor="middle" x="485" y="60">Internet</text>
+              
+            </svg>
+          </div>
+        </div>
+
+        <div class="rounded-3xl p-4 lg:p-5 flex-1 flex flex-col justify-center" style="background:#111b33;border:1px solid rgba(255,255,255,0.10);">
+          <div class="flex items-center space-x-2 mb-3">
+            <i class="fa-solid fa-play text-green-300"></i>
+            <p class="text-white text-xs lg:text-sm font-bold">What we’ll do in the demo</p>
+          </div>
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-3">
+            <div class="rounded-xl p-3" style="background:#0f1830;border:1px solid rgba(255,255,255,0.10);">
+              <div class="flex items-center space-x-2 mb-1.5">
+                <div class="w-5 h-5 rounded-md flex items-center justify-center" style="background:#111b33;"><p class="text-white text-[9px] font-extrabold">1</p></div>
+                <p class="text-white text-[10px] lg:text-xs font-semibold">Start capture</p>
+              </div>
+              <p class="text-blue-200 text-[9px] leading-snug">Choose your Wi‑Fi/Ethernet.</p>
+            </div>
+            <div class="rounded-xl p-3" style="background:#0f1830;border:1px solid rgba(255,255,255,0.10);">
+              <div class="flex items-center space-x-2 mb-1.5">
+                <div class="w-5 h-5 rounded-md flex items-center justify-center" style="background:#111b33;"><p class="text-white text-[9px] font-extrabold">2</p></div>
+                <p class="text-white text-[10px] lg:text-xs font-semibold">Generate traffic</p>
+              </div>
+              <p class="text-blue-200 text-[9px] leading-snug">Open a simple website.</p>
+            </div>
+            <div class="rounded-xl p-3" style="background:#0f1830;border:1px solid rgba(255,255,255,0.10);">
+              <div class="flex items-center space-x-2 mb-1.5">
+                <div class="w-5 h-5 rounded-md flex items-center justify-center" style="background:#111b33;"><p class="text-white text-[9px] font-extrabold">3</p></div>
+                <p class="text-white text-[10px] lg:text-xs font-semibold">Filter &amp; inspect</p>
+              </div>
+              <p class="text-blue-200 text-[9px] leading-snug">Map what we see to OSI layers.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-3xl p-4 lg:p-5" style="background:#0f1830;border:1px solid rgba(255,255,255,0.12);">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center space-x-2">
+              <i class="fa-solid fa-desktop text-blue-300"></i>
+              <p class="text-white text-xs lg:text-sm font-bold">Works on all computers</p>
+            </div>
+          </div>
+          <div class="grid grid-cols-3 gap-2 lg:gap-3">
+            <div class="rounded-xl p-2 flex items-center justify-center space-x-2" style="background:#111b33;border:1px solid rgba(255,255,255,0.10);">
+              <i class="fa-brands fa-windows text-blue-300 text-sm"></i>
+              <p class="text-blue-200 text-[10px] font-semibold">Windows</p>
+            </div>
+            <div class="rounded-xl p-2 flex items-center justify-center space-x-2" style="background:#111b33;border:1px solid rgba(255,255,255,0.10);">
+              <i class="fa-brands fa-apple text-gray-200 text-sm"></i>
+              <p class="text-blue-200 text-[10px] font-semibold">macOS</p>
+            </div>
+            <div class="rounded-xl p-2 flex items-center justify-center space-x-2" style="background:#111b33;border:1px solid rgba(255,255,255,0.10);">
+              <i class="fa-brands fa-linux text-yellow-200 text-sm"></i>
+              <p class="text-blue-200 text-[10px] font-semibold">Linux</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="flex-shrink-0 flex items-center justify-between mt-auto animate-fade-up delay-300 w-full pb-2 pt-2">
+      <div class="flex items-center space-x-3">
+        <div class="w-2 h-2 rounded-full animate-pulse" style="background:#34D399;"></div>
+        <p class="text-blue-200 text-[10px] lg:text-xs">Up next: understanding the three panes (Packet List • Details • Bytes)</p>
+      </div>
+      <div class="flex items-center space-x-3 hidden sm:flex">
+        <p class="text-blue-200 text-[10px] lg:text-xs">Section 4 progress</p>
+        <div class="w-16 h-1 rounded-full overflow-hidden" style="background:#1f2a44;">
+          <div class="h-full rounded-full" style="background:#60A5FA; width: 25%;"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <style>
+    .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+    .custom-scrollbar:hover::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); }
+  </style>
+
+  <script>
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'ArrowRight') {
+        window.location.href = 'slide14.html';
+      } else if (event.key === 'ArrowLeft') {
+        window.location.href = 'slide12.html';
+      }
+    });
+  </script>
+</body>
+</html>

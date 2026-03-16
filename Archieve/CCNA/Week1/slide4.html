@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+  <style>
+    * { box-sizing: border-box; }
+    /* Adaptive full-screen background */
+    body { margin: 0; background:#0b1220; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; overflow: hidden; }
+    .slide { width: 100vw; height: 100vh; position: relative; overflow: hidden; display: flex; justify-content: center; background: #0b1220; }
+    
+    /* --- General Slide Animations --- */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-up { animation: fadeUp 0.8s ease-out forwards; opacity: 0; }
+    .delay-100 { animation-delay: 100ms; }
+    .delay-300 { animation-delay: 300ms; }
+    .delay-500 { animation-delay: 500ms; }
+  </style>
+</head>
+<body>
+  <div class="slide">
+    
+    <div class="absolute inset-0 pointer-events-none w-full h-full">
+      <svg aria-hidden="true" class="w-full h-full" preserveAspectRatio="xMidYMid slice" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="150" cy="120" fill="#60A5FA" opacity="0.12" r="85"></circle>
+        <circle cx="1160" cy="130" fill="#34D399" opacity="0.10" r="70"></circle>
+        <circle cx="1135" cy="630" fill="#F59E0B" opacity="0.08" r="125"></circle>
+        <circle cx="240" cy="640" fill="#A78BFA" opacity="0.10" r="55"></circle>
+        
+        <circle cx="640" cy="70" fill="#60A5FA" opacity="0.55" r="2.4" class="animate-pulse"></circle>
+        <circle cx="680" cy="94" fill="#34D399" opacity="0.55" r="2.0"></circle>
+        <circle cx="720" cy="76" fill="#F59E0B" opacity="0.55" r="2.4" class="animate-pulse" style="animation-delay: 0.5s;"></circle>
+        <circle cx="760" cy="102" fill="#A78BFA" opacity="0.50" r="2.2"></circle>
+      </svg>
+    </div>
+
+    <div class="relative flex-1 flex flex-col w-full max-w-[1536px] mx-auto z-10">
+      
+      <div class="px-8 lg:px-16 pt-10 flex items-start justify-between animate-fade-up">
+        <div class="flex items-center space-x-3">
+          <div class="w-12 h-12 rounded-xl flex items-center justify-center transition-transform hover:scale-110 cursor-pointer" style="background:#111b33;">
+            <i class="fa-solid fa-window-maximize text-blue-300 text-xl"></i>
+          </div>
+          <div class="flex flex-col leading-tight">
+            <p class="text-white font-extrabold tracking-tight" style="font-size:28px;">Layer 7: Application — The User’s Doorway</p>
+            <p class="text-blue-200 text-sm">The layer you interact with (apps &amp; websites)</p>
+          </div>
+        </div>
+        <div class="flex items-center space-x-3">
+          <div class="px-4 py-2 rounded-full flex items-center space-x-2" style="background:#0f1830; border:1px solid rgba(255,255,255,0.10);">
+            <i class="fa-solid fa-layer-group text-green-300"></i>
+            <p class="text-blue-100 text-xs font-semibold">OSI Layer 7 of 7</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex-1 px-8 lg:px-16 pb-10 pt-6 flex space-x-10">
+        
+        <div class="w-5/12 flex flex-col animate-fade-up delay-100">
+          
+          <div class="rounded-3xl p-6" style="background:#0f1830; border:1px solid rgba(255,255,255,0.12);">
+            <div class="flex items-center space-x-3">
+              <div class="w-11 h-11 rounded-2xl flex items-center justify-center" style="background:#111b33;">
+                <i class="fa-solid fa-envelope-open-text text-yellow-300 text-lg"></i>
+              </div>
+              <div>
+                <p class="text-white font-bold" style="font-size:18px;">Simple analogy</p>
+                <p class="text-blue-200 text-xs">Like writing a letter and putting it in an envelope</p>
+              </div>
+            </div>
+            <div class="mt-5 space-y-4">
+              <div class="flex items-start space-x-3 hover:bg-[#111b33] p-2 rounded-xl transition duration-300">
+                <div class="mt-0.5 w-8 h-8 rounded-xl flex items-center justify-center shrink-0" style="background:#111b33;">
+                  <i class="fa-solid fa-pen-nib text-blue-300"></i>
+                </div>
+                <div>
+                  <p class="text-white text-sm font-semibold">You create the message.</p>
+                  <p class="text-blue-200 text-xs leading-relaxed">Example: “Open a website,” “send an email,” “join a game.”</p>
+                </div>
+              </div>
+              <div class="flex items-start space-x-3 hover:bg-[#111b33] p-2 rounded-xl transition duration-300">
+                <div class="mt-0.5 w-8 h-8 rounded-xl flex items-center justify-center shrink-0" style="background:#111b33;">
+                  <i class="fa-solid fa-door-open text-green-300"></i>
+                </div>
+                <div>
+                  <p class="text-white text-sm font-semibold">This is the “front door” of networking.</p>
+                  <p class="text-blue-200 text-xs leading-relaxed">Everything feels like buttons and screens at this layer.</p>
+                </div>
+              </div>
+              <div class="flex items-start space-x-3 hover:bg-[#111b33] p-2 rounded-xl transition duration-300">
+                <div class="mt-0.5 w-8 h-8 rounded-xl flex items-center justify-center shrink-0" style="background:#111b33;">
+                  <i class="fa-solid fa-map-signs text-orange-300"></i>
+                </div>
+                <div>
+                  <p class="text-white text-sm font-semibold">Ports help apps find the right “service.”</p>
+                  <p class="text-blue-200 text-xs leading-relaxed">Think of a port as the department number inside a big building.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-6 rounded-3xl p-6" style="background:#111b33; border:1px solid rgba(255,255,255,0.10);">
+            <div class="flex items-center space-x-3">
+              <div class="w-11 h-11 rounded-2xl flex items-center justify-center" style="background:#0f1830; border:1px solid rgba(255,255,255,0.10);">
+                <i class="fa-solid fa-puzzle-piece text-purple-200 text-lg"></i>
+              </div>
+              <div>
+                <p class="text-white font-bold" style="font-size:18px;">What you “see” at Layer 7</p>
+                <p class="text-blue-200 text-xs">Apps that ask for network help</p>
+              </div>
+            </div>
+            <div class="mt-5 grid grid-cols-2 gap-4">
+              <div class="rounded-2xl p-4 hover:-translate-y-1 transition-transform" style="background:#0f1830; border:1px solid rgba(255,255,255,0.10);">
+                <div class="flex items-center space-x-2">
+                  <i class="fa-brands fa-chrome text-blue-300"></i>
+                  <p class="text-white text-xs font-semibold">Web browser</p>
+                </div>
+                <p class="text-blue-200 text-xs mt-2 leading-snug">Chrome / Safari / Edge</p>
+              </div>
+              <div class="rounded-2xl p-4 hover:-translate-y-1 transition-transform" style="background:#0f1830; border:1px solid rgba(255,255,255,0.10);">
+                <div class="flex items-center space-x-2">
+                  <i class="fa-solid fa-envelope text-green-300"></i>
+                  <p class="text-white text-xs font-semibold">Email app</p>
+                </div>
+                <p class="text-blue-200 text-xs mt-2 leading-snug">Gmail / Outlook</p>
+              </div>
+              <div class="rounded-2xl p-4 hover:-translate-y-1 transition-transform" style="background:#0f1830; border:1px solid rgba(255,255,255,0.10);">
+                <div class="flex items-center space-x-2">
+                  <i class="fa-solid fa-gamepad text-orange-300"></i>
+                  <p class="text-white text-xs font-semibold">Games</p>
+                </div>
+                <p class="text-blue-200 text-xs mt-2 leading-snug">Online multiplayer</p>
+              </div>
+              <div class="rounded-2xl p-4 hover:-translate-y-1 transition-transform" style="background:#0f1830; border:1px solid rgba(255,255,255,0.10);">
+                <div class="flex items-center space-x-2">
+                  <i class="fa-solid fa-video text-yellow-300"></i>
+                  <p class="text-white text-xs font-semibold">Video calls</p>
+                </div>
+                <p class="text-blue-200 text-xs mt-2 leading-snug">Meet / Zoom</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="w-7/12 flex flex-col animate-fade-up delay-300">
+          
+          <div class="rounded-3xl p-6" style="background:#0f1830; border:1px solid rgba(255,255,255,0.12);">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-2xl flex items-center justify-center" style="background:#111b33;">
+                  <i class="fa-solid fa-list-check text-blue-300"></i>
+                </div>
+                <div>
+                  <p class="text-white font-bold text-sm">Common Layer‑7 “rules” (protocols)</p>
+                  <p class="text-blue-200 text-xs">Protocols are the agreed-upon ways to ask &amp; answer</p>
+                </div>
+              </div>
+              <div class="px-3 py-1.5 rounded-full" style="background:#111b33;">
+                <p class="text-blue-200 text-xs font-semibold">Beginner cheat sheet</p>
+              </div>
+            </div>
+            
+            <div class="mt-5 grid grid-cols-3 gap-4">
+              <div class="rounded-2xl p-4 hover:bg-[#1a294c] transition duration-300 cursor-default" style="background:#111b33; border:1px solid rgba(255,255,255,0.10);">
+                <div class="flex items-center justify-between">
+                  <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:#0f1830; border:1px solid rgba(255,255,255,0.10);">
+                    <i class="fa-solid fa-globe text-blue-300"></i>
+                  </div>
+                  <div class="px-2 py-1 rounded-lg" style="background:#0f1830; border:1px solid rgba(255,255,255,0.10);">
+                    <p class="text-blue-100" style="font-size:11px; font-weight:700;">80 / 443</p>
+                  </div>
+                </div>
+                <p class="text-white text-sm font-bold mt-3">HTTP / HTTPS</p>
+                <p class="text-blue-200 text-xs mt-1 leading-relaxed">Web pages and APIs (what browsers use).</p>
+              </div>
+              
+              <div class="rounded-2xl p-4 hover:bg-[#1a294c] transition duration-300 cursor-default" style="background:#111b33; border:1px solid rgba(255,255,255,0.10);">
+                <div class="flex items-center justify-between">
+                  <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:#0f1830; border:1px solid rgba(255,255,255,0.10);">
+                    <i class="fa-solid fa-at text-green-300"></i>
+                  </div>
+                  <div class="px-2 py-1 rounded-lg" style="background:#0f1830; border:1px solid rgba(255,255,255,0.10);">
+                    <p class="text-blue-100" style="font-size:11px; font-weight:700;">25 / 587</p>
+                  </div>
+                </div>
+                <p class="text-white text-sm font-bold mt-3">SMTP</p>
+                <p class="text-blue-200 text-xs mt-1 leading-relaxed">Sending email (outgoing mail).</p>
+              </div>
+              
+              <div class="rounded-2xl p-4 hover:bg-[#1a294c] transition duration-300 cursor-default" style="background:#111b33; border:1px solid rgba(255,255,255,0.10);">
+                <div class="flex items-center justify-between">
+                  <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:#0f1830; border:1px solid rgba(255,255,255,0.10);">
+                    <i class="fa-solid fa-inbox text-purple-200"></i>
+                  </div>
+                  <div class="px-2 py-1 rounded-lg" style="background:#0f1830; border:1px solid rgba(255,255,255,0.10);">
+                    <p class="text-blue-100" style="font-size:11px; font-weight:700;">143 / 993</p>
+                  </div>
+                </div>
+                <p class="text-white text-sm font-bold mt-3">IMAP</p>
+                <p class="text-blue-200 text-xs mt-1 leading-relaxed">Reading email (keeps mail on server).</p>
+              </div>
+              
+              <div class="rounded-2xl p-4 hover:bg-[#1a294c] transition duration-300 cursor-default" style="background:#111b33; border:1px solid rgba(255,255,255,0.10);">
+                <div class="flex items-center justify-between">
+                  <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:#0f1830; border:1px solid rgba(255,255,255,0.10);">
+                    <i class="fa-solid fa-address-book text-yellow-300"></i>
+                  </div>
+                  <div class="px-2 py-1 rounded-lg" style="background:#0f1830; border:1px solid rgba(255,255,255,0.10);">
+                    <p class="text-blue-100" style="font-size:11px; font-weight:700;">53</p>
+                  </div>
+                </div>
+                <p class="text-white text-sm font-bold mt-3">DNS</p>
+                <p class="text-blue-200 text-xs mt-1 leading-relaxed">Turns names (example.com) into IP addresses.</p>
+              </div>
+              
+              <div class="rounded-2xl p-4 hover:bg-[#1a294c] transition duration-300 cursor-default" style="background:#111b33; border:1px solid rgba(255,255,255,0.10);">
+                <div class="flex items-center justify-between">
+                  <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:#0f1830; border:1px solid rgba(255,255,255,0.10);">
+                    <i class="fa-solid fa-folder-open text-orange-300"></i>
+                  </div>
+                  <div class="px-2 py-1 rounded-lg" style="background:#0f1830; border:1px solid rgba(255,255,255,0.10);">
+                    <p class="text-blue-100" style="font-size:11px; font-weight:700;">21 / 22</p>
+                  </div>
+                </div>
+                <p class="text-white text-sm font-bold mt-3">FTP / SFTP</p>
+                <p class="text-blue-200 text-xs mt-1 leading-relaxed">Moving files between computers.</p>
+              </div>
+              
+              <div class="rounded-2xl p-4 hover:bg-[#1a294c] transition duration-300 cursor-default" style="background:#111b33; border:1px solid rgba(255,255,255,0.10);">
+                <div class="flex items-center justify-between">
+                  <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:#0f1830; border:1px solid rgba(255,255,255,0.10);">
+                    <i class="fa-solid fa-phone-volume text-green-300"></i>
+                  </div>
+                  <div class="px-2 py-1 rounded-lg" style="background:#0f1830; border:1px solid rgba(255,255,255,0.10);">
+                    <p class="text-blue-100" style="font-size:11px; font-weight:700;">varies</p>
+                  </div>
+                </div>
+                <p class="text-white text-sm font-bold mt-3">SIP (calls)</p>
+                <p class="text-blue-200 text-xs mt-1 leading-relaxed">Starts/controls VoIP phone calls.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-6 rounded-3xl p-6 flex-1" style="background:#111b33; border:1px solid rgba(255,255,255,0.10);">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-2xl flex items-center justify-center" style="background:#0f1830; border:1px solid rgba(255,255,255,0.10);">
+                  <i class="fa-solid fa-shield-halved text-green-300"></i>
+                </div>
+                <div>
+                  <p class="text-white font-bold text-sm">Real-world devices you might hear about</p>
+                  <p class="text-blue-200 text-xs">They “look inside” traffic at the app level</p>
+                </div>
+              </div>
+              <div class="px-3 py-1.5 rounded-full" style="background:#0f1830; border:1px solid rgba(255,255,255,0.10);">
+                <p class="text-blue-100 text-xs font-semibold">Hardware examples</p>
+              </div>
+            </div>
+            <div class="mt-5 grid grid-cols-3 gap-4">
+              <div class="rounded-2xl p-4 hover:-translate-y-1 transition-transform" style="background:#0f1830; border:1px solid rgba(255,255,255,0.10);">
+                <div class="flex items-center space-x-2">
+                  <i class="fa-solid fa-firewall text-orange-300"></i>
+                  <p class="text-white text-xs font-semibold">Next‑gen firewall</p>
+                </div>
+                <p class="text-blue-200 text-xs mt-2 leading-relaxed">Can recognize app traffic (like “web” vs “gaming”).</p>
+              </div>
+              <div class="rounded-2xl p-4 hover:-translate-y-1 transition-transform" style="background:#0f1830; border:1px solid rgba(255,255,255,0.10);">
+                <div class="flex items-center space-x-2">
+                  <i class="fa-solid fa-scale-balanced text-blue-300"></i>
+                  <p class="text-white text-xs font-semibold">Load balancer</p>
+                </div>
+                <p class="text-blue-200 text-xs mt-2 leading-relaxed">Spreads web requests across multiple servers.</p>
+              </div>
+              <div class="rounded-2xl p-4 hover:-translate-y-1 transition-transform" style="background:#0f1830; border:1px solid rgba(255,255,255,0.10);">
+                <div class="flex items-center space-x-2">
+                  <i class="fa-solid fa-bolt text-yellow-300"></i>
+                  <p class="text-white text-xs font-semibold">Web proxy / CDN edge</p>
+                </div>
+                <p class="text-blue-200 text-xs mt-2 leading-relaxed">Speeds up websites by caching nearby.</p>
+              </div>
+            </div>
+            
+            <div class="mt-5 rounded-2xl p-4 flex items-start space-x-3" style="background:#0f1830; border:1px solid rgba(255,255,255,0.10);">
+              <div class="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style="background:#111b33;">
+                <i class="fa-solid fa-lightbulb text-yellow-300"></i>
+              </div>
+              <div class="flex-1">
+                <p class="text-white text-sm font-semibold">Beginner tip</p>
+                <p class="text-blue-200 text-xs leading-relaxed">If a website won’t load, it could be the <span class="text-blue-100 font-semibold">Application layer</span> (the site is down) even if your Wi‑Fi signal looks perfect.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="px-8 lg:px-16 pb-10 flex items-center justify-between animate-fade-up delay-500">
+        <div class="flex items-center space-x-3">
+          <div class="w-2 h-2 rounded-full animate-pulse" style="background:#34D399;"></div>
+          <p class="text-blue-200 text-xs">Next: Layers 6 &amp; 5 — Presentation (format/encryption) and Session (conversation control)</p>
+        </div>
+        <div class="flex items-center space-x-3">
+          <p class="text-blue-200 text-xs">Section 2 progress</p>
+          <div class="w-12 h-1 rounded-full overflow-hidden" style="background:#1f2a44;">
+            <div class="h-full rounded-full" style="background:#60A5FA; width: 33%;"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'ArrowRight') {
+        window.location.href = 'slide5.html';
+      } else if (event.key === 'ArrowLeft') {
+        window.location.href = 'slide3.html';
+      }
+    });
+  </script>
+</body>
+</html>

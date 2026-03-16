@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+  <style>
+    * { box-sizing: border-box; }
+    
+    /* Adaptive full-screen background */
+    body { margin: 0; background: #0b1220; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; overflow: hidden; }
+    .slide { width: 100vw; height: 100vh; position: relative; overflow: hidden; display: flex; justify-content: center; background: #0b1220; }
+    
+    /* --- General Slide Animations --- */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-up { animation: fadeUp 0.8s ease-out forwards; opacity: 0; }
+    .delay-100 { animation-delay: 100ms; }
+    .delay-300 { animation-delay: 300ms; }
+    .delay-500 { animation-delay: 500ms; }
+
+    /* --- Cascade Highlight Animation (L7 to L1) --- */
+    @keyframes highlightCascade {
+      0%, 15%, 100% { border-color: rgba(255,255,255,0.10); background: #111b33; transform: translateX(0); box-shadow: none; z-index: 1; }
+      5%, 10% { border-color: #60A5FA; background: #1a294c; transform: translateX(-15px); box-shadow: -10px 0 25px rgba(96, 165, 250, 0.4); z-index: 10; }
+    }
+    
+    .layer-anim { animation: highlightCascade 7s infinite; position: relative; }
+    .layer-7 { animation-delay: 0s; }
+    .layer-6 { animation-delay: 1s; }
+    .layer-5 { animation-delay: 2s; }
+    .layer-4 { animation-delay: 3s; }
+    .layer-3 { animation-delay: 4s; }
+    .layer-2 { animation-delay: 5s; }
+    .layer-1 { animation-delay: 6s; }
+  </style>
+</head>
+<body>
+  <div class="slide">
+    
+    <div class="absolute inset-0 pointer-events-none w-full h-full">
+      <svg aria-hidden="true" class="w-full h-full" preserveAspectRatio="xMidYMid slice" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="155" cy="120" fill="#60A5FA" opacity="0.12" r="86"></circle>
+        <circle cx="1140" cy="150" fill="#F59E0B" opacity="0.10" r="62"></circle>
+        <circle cx="1145" cy="625" fill="#34D399" opacity="0.10" r="120"></circle>
+        <circle cx="220" cy="640" fill="#A78BFA" opacity="0.10" r="55"></circle>
+        
+        <circle cx="640" cy="68" fill="#60A5FA" opacity="0.55" r="2.4" class="animate-pulse"></circle>
+        <circle cx="680" cy="92" fill="#34D399" opacity="0.55" r="2.0"></circle>
+        <circle cx="720" cy="74" fill="#F59E0B" opacity="0.55" r="2.4" class="animate-pulse" style="animation-delay: 0.5s;"></circle>
+        <circle cx="760" cy="100" fill="#A78BFA" opacity="0.50" r="2.2"></circle>
+      </svg>
+    </div>
+
+    <div class="relative flex-1 flex flex-col w-full max-w-[1536px] mx-auto z-10">
+      
+      <div class="px-8 lg:px-16 pt-10 flex items-start justify-between animate-fade-up">
+        <div class="flex items-center space-x-3">
+          <div class="w-12 h-12 rounded-xl flex items-center justify-center transition-transform hover:scale-110" style="background:#111b33;">
+            <i class="fa-solid fa-layer-group text-blue-300 text-xl"></i>
+          </div>
+          <div class="flex flex-col leading-tight">
+            <p class="text-white font-extrabold tracking-tight" style="font-size:28px;">The OSI Model: The Internet’s Blueprint</p>
+            <p class="text-blue-200 text-sm">A simple way to learn “who does what” when data travels</p>
+          </div>
+        </div>
+        <div class="flex items-center space-x-3">
+          <div class="px-4 py-2 rounded-full flex items-center space-x-2" style="background:#0f1830; border:1px solid rgba(255,255,255,0.10);">
+            <i class="fa-solid fa-graduation-cap text-green-300"></i>
+            <p class="text-blue-100 text-xs font-semibold">Section 2: The OSI Model</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex-1 px-8 lg:px-16 pb-10 pt-6 flex space-x-10">
+        
+        <div class="w-5/12 flex flex-col justify-center animate-fade-up delay-100">
+          <div class="rounded-3xl p-6" style="background:#0f1830; border:1px solid rgba(255,255,255,0.12);">
+            <div class="flex items-center space-x-3">
+              <div class="w-11 h-11 rounded-2xl flex items-center justify-center" style="background:#111b33;">
+                <i class="fa-solid fa-compass-drafting text-yellow-300 text-lg"></i>
+              </div>
+              <div>
+                <p class="text-white font-bold" style="font-size:18px;">What it is</p>
+                <p class="text-blue-200 text-xs">A teaching framework with 7 layers (steps)</p>
+              </div>
+            </div>
+            <div class="mt-5 space-y-4">
+              <div class="flex items-start space-x-3 hover:bg-[#111b33] p-2 rounded-xl transition duration-300">
+                <div class="mt-0.5 w-8 h-8 rounded-xl flex items-center justify-center shrink-0" style="background:#111b33;">
+                  <i class="fa-solid fa-list-check text-blue-300"></i>
+                </div>
+                <div>
+                  <p class="text-white text-sm font-semibold">Breaks communication into 7 clear jobs.</p>
+                  <p class="text-blue-200 text-xs leading-relaxed">So you can learn one piece at a time—like a checklist.</p>
+                </div>
+              </div>
+              <div class="flex items-start space-x-3 hover:bg-[#111b33] p-2 rounded-xl transition duration-300">
+                <div class="mt-0.5 w-8 h-8 rounded-xl flex items-center justify-center shrink-0" style="background:#111b33;">
+                  <i class="fa-solid fa-industry text-green-300"></i>
+                </div>
+                <div>
+                  <p class="text-white text-sm font-semibold">Analogy: a factory assembly line.</p>
+                  <p class="text-blue-200 text-xs leading-relaxed">Each station adds something useful, then passes it down.</p>
+                </div>
+              </div>
+              <div class="flex items-start space-x-3 hover:bg-[#111b33] p-2 rounded-xl transition duration-300">
+                <div class="mt-0.5 w-8 h-8 rounded-xl flex items-center justify-center shrink-0" style="background:#111b33;">
+                  <i class="fa-solid fa-wrench text-orange-300"></i>
+                </div>
+                <div>
+                  <p class="text-white text-sm font-semibold">Why it helps: troubleshooting.</p>
+                  <p class="text-blue-200 text-xs leading-relaxed">If Wi‑Fi fails, you can ask: “Is it a cable problem (L1) or an app problem (L7)?”</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mt-6 grid grid-cols-2 gap-4">
+            <div class="rounded-3xl p-5 hover:-translate-y-1 transition-transform cursor-pointer" style="background:#111b33; border:1px solid rgba(255,255,255,0.10);">
+              <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-2xl flex items-center justify-center" style="background:#0f1830; border:1px solid rgba(255,255,255,0.10);">
+                  <i class="fa-solid fa-user text-blue-200"></i>
+                </div>
+                <div>
+                  <p class="text-white text-sm font-bold">Top layers</p>
+                  <p class="text-blue-200 text-xs">Closer to you &amp; your apps</p>
+                </div>
+              </div>
+            </div>
+            <div class="rounded-3xl p-5 hover:-translate-y-1 transition-transform cursor-pointer" style="background:#111b33; border:1px solid rgba(255,255,255,0.10);">
+              <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-2xl flex items-center justify-center" style="background:#0f1830; border:1px solid rgba(255,255,255,0.10);">
+                  <i class="fa-solid fa-bolt text-green-200"></i>
+                </div>
+                <div>
+                  <p class="text-white text-sm font-bold">Bottom layers</p>
+                  <p class="text-blue-200 text-xs">Closer to wires &amp; signals</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="w-7/12 flex items-center justify-end animate-fade-up delay-300">
+          <div class="w-full">
+            <div class="rounded-3xl p-6" style="background:#0f1830; border:1px solid rgba(255,255,255,0.12);">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                  <div class="w-10 h-10 rounded-2xl flex items-center justify-center" style="background:#111b33;">
+                    <i class="fa-solid fa-cubes-stacked text-blue-300"></i>
+                  </div>
+                  <div>
+                    <p class="text-white font-bold text-sm">The 7 OSI layers (top → bottom)</p>
+                    <p class="text-blue-200 text-xs">We’ll explain each layer with a “mail package” analogy</p>
+                  </div>
+                </div>
+                <div class="px-3 py-1.5 rounded-full" style="background:#111b33;">
+                  <p class="text-blue-200 text-xs font-semibold">L7 → L1</p>
+                </div>
+              </div>
+              
+              <div class="mt-6 flex space-x-5 items-stretch">
+                <div class="flex-1">
+                  <div class="space-y-2">
+                    <div class="rounded-2xl p-4 flex items-center justify-between layer-anim layer-7" style="background:#111b33; border:1px solid rgba(255,255,255,0.10);">
+                      <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:#0f1830; border:1px solid rgba(255,255,255,0.10);">
+                          <p class="text-blue-200 text-xs font-extrabold">L7</p>
+                        </div>
+                        <div>
+                          <p class="text-white text-sm font-bold">Application</p>
+                          <p class="text-blue-200 text-xs">What you use (browser, email, games)</p>
+                        </div>
+                      </div>
+                      <i class="fa-solid fa-window-maximize text-blue-300 text-lg"></i>
+                    </div>
+                    
+                    <div class="rounded-2xl p-4 flex items-center justify-between layer-anim layer-6" style="background:#111b33; border:1px solid rgba(255,255,255,0.10);">
+                      <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:#0f1830; border:1px solid rgba(255,255,255,0.10);">
+                          <p class="text-green-200 text-xs font-extrabold">L6</p>
+                        </div>
+                        <div>
+                          <p class="text-white text-sm font-bold">Presentation</p>
+                          <p class="text-blue-200 text-xs">Format &amp; security (like encryption)</p>
+                        </div>
+                      </div>
+                      <i class="fa-solid fa-lock text-green-300 text-lg"></i>
+                    </div>
+                    
+                    <div class="rounded-2xl p-4 flex items-center justify-between layer-anim layer-5" style="background:#111b33; border:1px solid rgba(255,255,255,0.10);">
+                      <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:#0f1830; border:1px solid rgba(255,255,255,0.10);">
+                          <p class="text-yellow-200 text-xs font-extrabold">L5</p>
+                        </div>
+                        <div>
+                          <p class="text-white text-sm font-bold">Session</p>
+                          <p class="text-blue-200 text-xs">Start/keep/close a conversation</p>
+                        </div>
+                      </div>
+                      <i class="fa-solid fa-handshake text-yellow-300 text-lg"></i>
+                    </div>
+                    
+                    <div class="rounded-2xl p-4 flex items-center justify-between layer-anim layer-4" style="background:#111b33; border:1px solid rgba(255,255,255,0.10);">
+                      <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:#0f1830; border:1px solid rgba(255,255,255,0.10);">
+                          <p class="text-orange-200 text-xs font-extrabold">L4</p>
+                        </div>
+                        <div>
+                          <p class="text-white text-sm font-bold">Transport</p>
+                          <p class="text-blue-200 text-xs">Reliable vs fast delivery (TCP/UDP)</p>
+                        </div>
+                      </div>
+                      <i class="fa-solid fa-truck-fast text-orange-300 text-lg"></i>
+                    </div>
+                    
+                    <div class="rounded-2xl p-4 flex items-center justify-between layer-anim layer-3" style="background:#111b33; border:1px solid rgba(255,255,255,0.10);">
+                      <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:#0f1830; border:1px solid rgba(255,255,255,0.10);">
+                          <p class="text-purple-200 text-xs font-extrabold">L3</p>
+                        </div>
+                        <div>
+                          <p class="text-white text-sm font-bold">Network</p>
+                          <p class="text-blue-200 text-xs">IP addresses &amp; best route</p>
+                        </div>
+                      </div>
+                      <i class="fa-solid fa-route text-purple-200 text-lg"></i>
+                    </div>
+                    
+                    <div class="rounded-2xl p-4 flex items-center justify-between layer-anim layer-2" style="background:#111b33; border:1px solid rgba(255,255,255,0.10);">
+                      <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:#0f1830; border:1px solid rgba(255,255,255,0.10);">
+                          <p class="text-blue-200 text-xs font-extrabold">L2</p>
+                        </div>
+                        <div>
+                          <p class="text-white text-sm font-bold">Data Link</p>
+                          <p class="text-blue-200 text-xs">Local delivery (MAC addresses)</p>
+                        </div>
+                      </div>
+                      <i class="fa-solid fa-network-wired text-blue-300 text-lg"></i>
+                    </div>
+                    
+                    <div class="rounded-2xl p-4 flex items-center justify-between layer-anim layer-1" style="background:#111b33; border:1px solid rgba(255,255,255,0.10);">
+                      <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:#0f1830; border:1px solid rgba(255,255,255,0.10);">
+                          <p class="text-green-200 text-xs font-extrabold">L1</p>
+                        </div>
+                        <div>
+                          <p class="text-white text-sm font-bold">Physical</p>
+                          <p class="text-blue-200 text-xs">Cables, light, radio waves (bits)</p>
+                        </div>
+                      </div>
+                      <i class="fa-solid fa-wave-square text-green-300 text-lg"></i>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="w-52 flex flex-col justify-between">
+                  <div class="rounded-2xl p-4 hover:-translate-y-1 transition-transform" style="background:#111b33; border:1px solid rgba(255,255,255,0.10);">
+                    <div class="flex items-center space-x-2">
+                      <i class="fa-solid fa-box-open text-yellow-300"></i>
+                      <p class="text-white text-xs font-bold">Think “package”</p>
+                    </div>
+                    <p class="text-blue-200 text-xs mt-2 leading-snug">As data goes down, it gets wrapped with labels.</p>
+                  </div>
+                  <div class="rounded-2xl p-4 hover:-translate-y-1 transition-transform" style="background:#111b33; border:1px solid rgba(255,255,255,0.10);">
+                    <div class="flex items-center space-x-2">
+                      <i class="fa-solid fa-bug-slash text-green-300"></i>
+                      <p class="text-white text-xs font-bold">Find problems faster</p>
+                    </div>
+                    <p class="text-blue-200 text-xs mt-2 leading-snug">Example: “No internet” might be a router issue (L3).</p>
+                  </div>
+                  <div class="rounded-2xl p-4 hover:-translate-y-1 transition-transform" style="background:#111b33; border:1px solid rgba(255,255,255,0.10);">
+                    <div class="flex items-center space-x-2">
+                      <i class="fa-solid fa-eye text-purple-200"></i>
+                      <p class="text-white text-xs font-bold">Wireshark later</p>
+                    </div>
+                    <p class="text-blue-200 text-xs mt-2 leading-snug">We’ll open a real packet and see these layers.</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="mt-5 rounded-2xl p-4 flex items-start space-x-3" style="background:#111b33; border:1px solid rgba(255,255,255,0.10);">
+                <div class="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style="background:#0f1830; border:1px solid rgba(255,255,255,0.10);">
+                  <i class="fa-solid fa-lightbulb text-yellow-300"></i>
+                </div>
+                <div>
+                  <p class="text-white text-sm font-semibold">Beginner tip</p>
+                  <p class="text-blue-200 text-xs leading-relaxed">You don’t need to memorize everything now. Just remember: <span class="text-blue-100 font-semibold">top = apps</span>, <span class="text-blue-100 font-semibold">bottom = wires</span>, and every layer has one job.</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        
+      </div>
+
+      <div class="px-8 lg:px-16 pb-10 flex items-center justify-between animate-fade-up delay-500">
+        <div class="flex items-center space-x-3">
+          <div class="w-2 h-2 rounded-full animate-pulse" style="background:#34D399;"></div>
+          <p class="text-blue-200 text-xs">Next up: Layer 7 (Application) — what you actually click and use</p>
+        </div>
+        <div class="flex items-center space-x-3">
+          <p class="text-blue-200 text-xs">Progress</p>
+          <div class="w-16 h-1 rounded-full overflow-hidden" style="background:#1f2a44;">
+             <div class="h-full rounded-full" style="background:#60A5FA; width: 85%;"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'ArrowRight') {
+        window.location.href = 'slide4.html';
+      } else if (event.key === 'ArrowLeft') {
+        window.location.href = 'slide2.html';
+      }
+    });
+  </script>
+</body>
+</html>
