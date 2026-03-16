@@ -43,7 +43,7 @@
     body { background-color: #050b14; color: #cbd5e1; margin: 0; overflow: hidden; }
     
     /* Hide all slides by default */
-    .slide-section { display: none; height: 100%; width: 100%; align-items: center; justify-content: center; padding: 2rem; }
+    .slide-section { display: none; min-height: 100%; width: 100%; align-items: center; justify-content: center; padding: 2rem; }
     /* Show active slide */
     .slide-section.active { display: flex; }
     
@@ -94,6 +94,9 @@
         <button onclick="showSlide('slide-8', this)" class="menu-btn w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-semibold text-slate-400 hover:bg-slate-800/50 hover:text-white text-left">
           <i class="fa-solid fa-envelope w-5"></i> Contact
         </button>
+        <button onclick="showSlide('slide-9', this)" class="menu-btn w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-semibold text-slate-400 hover:bg-slate-800/50 hover:text-white text-left">
+          <i class="fa-solid fa-folder-open w-5"></i> Digital Archive
+        </button>
       </nav>
     </div>
     
@@ -112,10 +115,10 @@
       </svg>
     </div>
 
-    <div class="relative w-full h-full max-w-5xl mx-auto">
+    <div class="relative w-full h-full max-w-5xl mx-auto flex flex-col justify-center">
       
       <section id="slide-1" class="slide-section active flex-col items-start justify-center">
-        <div class="border-l-4 border-cyber-500 pl-6 mb-6">
+        <div class="border-l-4 border-cyber-500 pl-6 mb-6 w-full">
           <p class="font-mono text-cyber-400 mb-4 tracking-widest text-sm">INITIATING SECURE CONNECTION...</p>
           <h1 class="text-6xl font-extrabold text-white mb-4 tracking-tight">Abinivesh S</h1>
           <h2 class="text-2xl text-slate-300 font-light">Cybersecurity Professional | Penetration Tester | Network Security</h2>
@@ -132,7 +135,7 @@
           <h2 class="text-3xl font-bold text-white mb-8 border-b border-dark-border pb-4 flex items-center gap-3">
             <i class="fa-solid fa-user text-cyber-500"></i> About Me
           </h2>
-          <div class="flex gap-8 items-center bg-dark-panel p-8 rounded-xl border border-dark-border">
+          <div class="flex flex-col md:flex-row gap-8 items-center bg-dark-panel p-8 rounded-xl border border-dark-border">
             <div class="w-40 h-40 shrink-0 bg-slate-800 rounded-full border-4 border-cyber-900 flex items-center justify-center relative overflow-hidden">
               <i class="fa-solid fa-user-astronaut text-6xl text-slate-600"></i>
               <div class="absolute inset-0 border-2 border-cyber-500 rounded-full opacity-50"></div>
@@ -148,7 +151,7 @@
       </section>
 
       <section id="slide-3" class="slide-section flex-col">
-        <div class="w-full h-full flex flex-col justify-center">
+        <div class="w-full">
           <h2 class="text-3xl font-bold text-white mb-8 border-b border-dark-border pb-4 flex items-center gap-3">
             <i class="fa-solid fa-microchip text-cyber-500"></i> Core Expertise
           </h2>
@@ -229,12 +232,12 @@
           </h2>
           
           <div class="flex flex-col gap-6">
-            <div class="flex items-center gap-6 bg-dark-panel p-6 rounded-xl border border-dark-border">
+            <div class="flex flex-col md:flex-row items-center gap-6 bg-dark-panel p-6 rounded-xl border border-dark-border">
               <div class="w-16 h-16 bg-slate-800 rounded-lg flex items-center justify-center shrink-0 border border-slate-700">
                 <i class="fa-solid fa-user-graduate text-2xl text-cyber-accent"></i>
               </div>
-              <div class="flex-1">
-                <div class="flex justify-between items-start mb-2">
+              <div class="flex-1 w-full">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-2 gap-2">
                   <h3 class="text-xl font-bold text-white">M.Tech Cyber Security</h3>
                   <span class="px-3 py-1 bg-cyber-900/30 text-cyber-400 font-mono text-sm border border-cyber-500/30 rounded">8.9 CGPA</span>
                 </div>
@@ -243,12 +246,12 @@
               </div>
             </div>
 
-            <div class="flex items-center gap-6 bg-dark-panel p-6 rounded-xl border border-dark-border">
+            <div class="flex flex-col md:flex-row items-center gap-6 bg-dark-panel p-6 rounded-xl border border-dark-border">
               <div class="w-16 h-16 bg-slate-800 rounded-lg flex items-center justify-center shrink-0 border border-slate-700">
                 <i class="fa-solid fa-book text-2xl text-slate-400"></i>
               </div>
-              <div class="flex-1">
-                <div class="flex justify-between items-start mb-2">
+              <div class="flex-1 w-full">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-2 gap-2">
                   <h3 class="text-xl font-bold text-white">B.Tech - CSE (Cyber Security)</h3>
                   <span class="px-3 py-1 bg-slate-800 text-slate-300 font-mono text-sm border border-slate-600 rounded">8.26 CGPA</span>
                 </div>
@@ -353,7 +356,7 @@
               <div class="terminal-dot bg-green-500"></div>
               <span class="ml-4 text-xs text-slate-400 font-mono">root@kali:~</span>
             </div>
-            <div class="p-6 font-mono text-sm">
+            <div class="p-4 md:p-6 font-mono text-xs md:text-sm overflow-x-auto">
               <p class="text-cyber-500 mb-2">┌──(root㉿kali)-[~]</p>
               <p class="text-slate-300 mb-4">└─# <span class="text-white">nmap -sV -sC -T4 target_network</span></p>
               
@@ -362,7 +365,7 @@
               <p class="text-slate-400">Host is up (0.0020s latency).</p>
               <p class="text-slate-400 mb-4">Not shown: 997 closed tcp ports</p>
               
-              <div class="grid grid-cols-3 text-slate-300 mb-4">
+              <div class="grid grid-cols-3 text-slate-300 mb-4 min-w-[300px]">
                 <span class="font-bold text-white">PORT</span>
                 <span class="font-bold text-white">STATE</span>
                 <span class="font-bold text-white">SERVICE</span>
@@ -409,13 +412,13 @@
               </div>
             </div>
 
-            <div class="bg-dark-panel p-6 rounded-xl border border-dark-border flex items-center gap-5 hover:border-cyber-500/50">
+            <div class="bg-dark-panel p-6 rounded-xl border border-dark-border flex items-center gap-5 hover:border-cyber-500/50 overflow-hidden">
               <div class="w-14 h-14 bg-slate-800 rounded-full flex items-center justify-center shrink-0">
                 <i class="fa-solid fa-envelope text-xl text-cyber-400"></i>
               </div>
-              <div>
+              <div class="min-w-0">
                 <p class="text-xs text-slate-500 uppercase tracking-wider mb-1">Email</p>
-                <p class="text-white font-semibold">abinivesh97@gmail.com</p>
+                <p class="text-white font-semibold truncate">abinivesh97@gmail.com</p>
               </div>
             </div>
 
@@ -438,6 +441,47 @@
                 <p class="text-xs text-slate-500 uppercase tracking-wider mb-1">Languages</p>
                 <p class="text-white font-semibold">English, Tamil</p>
               </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <section id="slide-9" class="slide-section flex-col">
+        <div class="w-full h-full flex flex-col justify-center">
+          <h2 class="text-3xl font-bold text-white mb-8 border-b border-dark-border pb-4 flex items-center gap-3">
+            <i class="fa-solid fa-folder-open text-cyber-500"></i> Digital Archive
+          </h2>
+          
+          <p class="text-slate-400 mb-8">Access my interactive presentations, technical walkthroughs, and research materials.</p>
+          
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            
+            <div class="bg-dark-panel p-6 rounded-xl border border-dark-border hover:border-cyber-500/50 transition-colors flex flex-col h-full shadow-lg">
+              <div class="flex items-start justify-between mb-4">
+                <div class="w-12 h-12 bg-slate-800 rounded-lg flex items-center justify-center border border-slate-700">
+                  <i class="fa-solid fa-network-wired text-cyber-400 text-xl"></i>
+                </div>
+                <span class="px-3 py-1 bg-cyber-900/30 text-cyber-400 font-mono text-xs border border-cyber-500/30 rounded">Networking</span>
+              </div>
+              
+              <h3 class="text-xl font-bold text-white mb-2">CCNA - Week 1: Network Fundamentals</h3>
+              <p class="text-sm text-slate-400 mb-6 flex-1">A highly interactive, 17-slide presentation covering the OSI Model, TCP/IP, Encapsulation, and an introduction to Wireshark packet analysis.</p>
+              
+              <div class="flex gap-3 mt-auto">
+                <a href="Archieve/CCNA/Week1/slide1.html" target="_blank" class="flex-1 bg-cyber-500 text-black text-center px-4 py-2 rounded font-bold hover:bg-cyber-400 transition-colors text-sm flex items-center justify-center gap-2">
+                  <i class="fa-solid fa-play"></i> Start Presentation
+                </a>
+                <a href="Archieve/CCNA/Week1/slide17.html" target="_blank" class="px-4 py-2 bg-slate-800 text-white rounded font-bold hover:bg-slate-700 transition-colors border border-slate-600 text-sm flex items-center justify-center">
+                  Review Recap
+                </a>
+              </div>
+            </div>
+
+            <div class="bg-dark-panel p-6 rounded-xl border border-dashed border-slate-700 flex flex-col items-center justify-center text-center opacity-40 h-full min-h-[250px]">
+              <i class="fa-solid fa-lock text-3xl text-slate-600 mb-3"></i>
+              <p class="text-slate-400 font-mono text-sm tracking-widest">ENCRYPTED // FUTURE CONTENT</p>
+              <p class="text-slate-500 text-xs mt-2">More write-ups arriving soon.</p>
             </div>
 
           </div>
